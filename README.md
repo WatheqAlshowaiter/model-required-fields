@@ -1,19 +1,13 @@
-# Get the model required fields without nullables, primary keys and fields with defaults.
+[![Package cover](./arts/package-cover.png)
+
+# Model Required Fields
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/watheqalshowaiter/model-required-fields.svg?style=flat-square)](https://packagist.org/packages/watheqalshowaiter/model-required-fields)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/watheqalshowaiter/model-required-fields.svg?style=flat-square)](https://packagist.org/packages/watheqalshowaiter/model-required-fields)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/model-required-fields.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/model-required-fields)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+Get the **required** model fields, excluding **primary keys**, **nullable** fields, and fields with **defaults**.
 
 ## Installation
 
@@ -23,37 +17,23 @@ You can install the package via composer:
 composer require watheqalshowaiter/model-required-fields
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="model-required-fields-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="model-required-fields-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="model-required-fields-views"
-```
-
 ## Usage
 
+- Add the `RequiredFields` trait to your model
+
 ```php
-$modelRequiredFields = new WatheqAlshowaiter\ModelRequiredFields();
-echo $modelRequiredFields->echoPhrase('Hello, WatheqAlshowaiter!');
+use WatheqAlshowaiter\ModelRequiredFields\RequiredFields;
+
+class User extends Model
+{
+   use RequiredFields;
+}
+```
+
+- Now use the trait as follows
+
+```php
+    User::requiredFields(); // returns ['name', 'email', 'password']
 ```
 
 ## Testing
@@ -68,11 +48,12 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+This package is simple yet completed in its focused scope, but if you have any ideas or suggestions to improve it or fix
+bugs, your contribution is welcome. I encourage you to submit an issue first, then do pull request.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+If you find any security vulnerabilities don't hesitate to contact me at `watheqalshowaiter[at]gmail.com` to fix it.
 
 ## Credits
 
