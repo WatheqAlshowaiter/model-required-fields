@@ -1,18 +1,15 @@
 <?php
 
-
 use WatheqAlshowaiter\ModelRequiredFields\Models\AnotherParentTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ChildTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ParentTestModel;
 
-
 it('get required fields for parent model', function () {
     expect(ParentTestModel::getRequiredFields())->toBe([
         'name',
-        'email'
+        'email',
     ]);
 });
-
 
 it('get required fields for another parent model', function () {
     expect(AnotherParentTestModel::getRequiredFields())->toBe([
@@ -20,7 +17,6 @@ it('get required fields for another parent model', function () {
         'ulid',
     ]);
 });
-
 
 it('get required fields for child model', function () {
     expect(ChildTestModel::getRequiredFields())->toBe([
