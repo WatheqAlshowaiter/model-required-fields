@@ -22,4 +22,6 @@ it('get required fields for child model', function () {
     expect(ChildTestModel::getRequiredFields())->toBe([
         'parent_id',
     ]);
+
+    expect(true)->toBe(false);
 });
