@@ -6,7 +6,6 @@
         "laravel",
         "model-required-fields"
     ],
-    "version": "1.1.0",
     "homepage": "https://github.com/watheqalshowaiter/model-required-fields",
     "license": "MIT",
     "authors": [
@@ -37,8 +36,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "WatheqAlshowaiter\\ModelRequiredFields\\Tests\\": "tests/",
-            "Workbench\\App\\": "workbench/app/"
+            "WatheqAlshowaiter\\ModelRequiredFields\\Tests\\": "tests/"
         }
     },
     "scripts": {
