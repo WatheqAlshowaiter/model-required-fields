@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->enum('types', ['one', 'two'])->default('one'); // default => ignored
             $table->uuid('uuid'); // required
             $table->ulid(); // required
+            $table->json('description')->nullable();
         });
     }
 

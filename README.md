@@ -1,4 +1,4 @@
-[![Package cover](./arts/package-cover.png)
+![Package cover](./arts/package-cover.png)
 
 # Model Required Fields
 
@@ -11,13 +11,27 @@ Get the **required** model fields, excluding **primary keys**, **nullable** fiel
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require watheqalshowaiter/model-required-fields
 ```
 
 ## Usage
+
+We Assume that the `User` model has this schema as the defaults
+
+```php
+Schema::create('users', function (Blueprint $table) {
+    $table->id(); // primary key
+    $table->string('name'); // required
+    $table->string('email')->unique(); // required
+    $table->timestamp('email_verified_at')->nullable(); // nullable
+    $table->string('password'); // required
+    $table->rememberToken(); // nullable
+    $table->timestamps(); // nullable
+});
+```
 
 - Add the `RequiredFields` trait to your model
 
@@ -33,8 +47,63 @@ class User extends Model
 - Now use the trait as follows
 
 ```php
-    User::requiredFields(); // returns ['name', 'email', 'password']
+User::requiredFields(); // returns ['name', 'email', 'password']
 ```
+
+That's it!
+
+### Another Complex Table
+
+let's say the `Post` model has these fields
+
+```php
+Schema::create('posts', function (Blueprint $table) {
+    $table->uuid('id')->primary(); // primary key
+    $table->foreignUlid('user')->constrained(); // required 
+    $table->foreignId('category')->nullable()->constrained(); // nullable 
+    $table->uuid(); // required
+    $table->ulid()->nullable(); // nullable 
+    $table->boolean('active')->default(false); // default 
+    $table->string('title'); // required
+    $table->json('description')->nullable();
+    $table->string('slug')->nullable()->unique(); // nullable
+    $table->timestamps(); // nullable
+    $table->softDeletes(); // nullable
+});
+```
+
+- We can add the `RequiredFields` trait to the `Post` Model
+
+```php
+use WatheqAlshowaiter\ModelRequiredFields\RequiredFields;
+
+class Post extends Model
+{
+   use RequiredFields;
+}
+```
+
+- Now use the trait as follows
+
+```php
+Post::requiredFields(); // returns ['user', 'uuid', 'title]
+```
+
+## Why?
+
+I created this package to add tests to a legacy project that didn't have any. \
+I wanted to add tests but couldn't find a factory, so I tried building them. \
+However, it was hard to figure out the required fields for testing the basic functionality since some tables have too many fields.\
+To solve this, I created a simple trait that retrieves the required fields easily.\
+Later, I added support for older Laravel versions, as that was where most of the use cases occurred.\
+Eventually, I extracted it into this package.
+
+So Briefly, This package is useful if:
+
+- you want to build factories or tests for projects you didn't start from scratch.
+- you are working with a legacy project and don't want to be faced with SQL errors when creating tables.
+- you have so many fields in your table and want to get the required fields fast.
+- or any use case you find it useful.
 
 ## Testing
 
@@ -49,11 +118,12 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 This package is simple yet completed in its focused scope, but if you have any ideas or suggestions to improve it or fix
-bugs, your contribution is welcome. I encourage you to submit an issue first, then do pull request.
+bugs, your contribution is welcome. I encourage you to submit an issue first, then do a pull request.
 
 ## Security Vulnerabilities
 
-If you find any security vulnerabilities don't hesitate to contact me at `watheqalshowaiter[at]gmail.com` to fix it.
+If you find any security vulnerabilities don't hesitate to contact me at `watheqalshowaiter[at]gmail[dot]com` to fix
+them.
 
 ## Credits
 
