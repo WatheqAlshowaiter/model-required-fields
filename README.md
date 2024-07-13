@@ -91,12 +91,11 @@ Post::requiredFields(); // returns ['user', 'uuid', 'title]
 
 ## Why?
 
-I created this package to add tests to a legacy project that didn't have any. \
-I wanted to add tests but couldn't find a factory, so I tried building them. \
-However, it was hard to figure out the required fields for testing the basic functionality since some tables have too many fields.\
-To solve this, I created a simple trait that retrieves the required fields easily.\
-Later, I added support for older Laravel versions, as that was where most of the use cases occurred.\
-Eventually, I extracted it into this package.
+### The problem
+I wanted to add tests to a legacy project that didn't have any. I wanted to add tests but couldn't find a factory, so I tried building them. However, it was hard to figure out the required fields for testing the basic functionality since some tables have too many fields.
+
+### The Solution
+To solve this, I created a simple trait that retrieves the required fields easily. Later, I added support for older Laravel versions, as that was where most of the use cases occurred. Eventually, I extracted it into this package.
 
 So Briefly, This package is useful if:
 
