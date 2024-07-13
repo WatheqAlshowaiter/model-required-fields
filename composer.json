@@ -30,8 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WatheqAlshowaiter\\ModelRequiredFields\\": "src/",
-            "WatheqAlshowaiter\\ModelRequiredFields\\Database\\Factories\\": "database/factories/"
+            "WatheqAlshowaiter\\ModelRequiredFields\\": "src/"
         }
     },
     "autoload-dev": {
