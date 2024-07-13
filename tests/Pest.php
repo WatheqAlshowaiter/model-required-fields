@@ -1,5 +1,8 @@
 <?php
 
-use VendorName\Skeleton\Tests\TestCase;
+use WatheqAlshowaiter\ModelRequiredFields\Tests\TestCase;
+use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 
-uses(TestCase::class)->in(__DIR__);
+
+uses(TestCase::class, LazilyRefreshDatabase::class)->in(__DIR__);
+
