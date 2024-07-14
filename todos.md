@@ -10,12 +10,12 @@
 - [x] use phpunit instead of pest
 - [ ] test code for SQL server
 - [ ] try previous versions of laravel until laravel 6
-    - [x] 11
-    - [x] 10
-    - [ ] 9
-    - [ ] 8
-    - [ ] 7
-    - [ ] 6
+    - [x] 11 => sqlite, mysql/mariadb(1st party supported in Laravel 11), postgres
+    - [x] 10 => sqlite, mysql, postgres
+    - [ ] 9  =>
+    - [ ] 8  =>
+    - [ ] 7  =>
+    - [ ] 6  =>
 - [ ] try previous versions of php until php 7.4
     - [x] 8.2
     - [x] 8.1
