@@ -2,6 +2,13 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.5.0 - 2024-07-14
+
+- fix bug in migrations
+- make migrations only work when testing the package
+- improve migrations and models naming
+  **Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.4.0...1.5.0
+
 ## 1.4.0 - 2024-07-14
 
 ### Make the library more compatible with lower versions
