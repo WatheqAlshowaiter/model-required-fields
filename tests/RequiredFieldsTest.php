@@ -1,10 +1,10 @@
 <?php
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use WatheqAlshowaiter\ModelRequiredFields\Models\AnotherParentTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ChildTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ParentTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RequiredFieldsTest extends TestCase
 {
