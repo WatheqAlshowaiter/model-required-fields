@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('parent_test_models', function (Blueprint $table) {
+        Schema::create('fathers', function (Blueprint $table) {
             $table->id(); // primary key -> ignored
             $table->boolean('active')->default(false); // default => ignored
             $table->string('name'); // required

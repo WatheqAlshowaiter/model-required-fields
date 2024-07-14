@@ -8,10 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('child_test_models', function (Blueprint $table) {
+        Schema::create('sons', function (Blueprint $table) {
             $table->uuid('id')->primary(); // primary key => ignored
             $table->foreignId('parent_id')->constrained(); // required
-            $table->foreignUlid('another_parent_id')->nullable()->constrained(); // nullable => ignored
+            $table->foreignUlid('mother_id')->nullable()->constrained(); // nullable => ignored
+            $table->foreignId('father_id')->nullable()->constrained(); // nullable => ignored
         });
     }
 
