@@ -2,22 +2,17 @@
 
 namespace WatheqAlshowaiter\ModelRequiredFields;
 
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class ModelRequiredFieldsServiceProvider extends PackageServiceProvider
+class ModelRequiredFieldsServiceProvider extends ServiceProvider
 {
-    public function configurePackage(Package $package): void
+    public function register()
     {
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        //
+    }
 
-        /*
-         * This class is a Package Service Provider
-         *
-         * More info: https://github.com/spatie/laravel-package-tools
-         */
-
-        $package
-            ->name('model-required-fields');
+    public function boot()
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
     }
 }
