@@ -3,6 +3,10 @@
 namespace WatheqAlshowaiter\ModelRequiredFields;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Arr;
+
+
+
 
 class ModelRequiredFieldsServiceProvider extends ServiceProvider
 {
