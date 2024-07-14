@@ -59,16 +59,23 @@ let's say the `Post` model has these fields
 ```php
 Schema::create('posts', function (Blueprint $table) {
     $table->uuid('id')->primary(); // primary key
-    $table->foreignUlid('user')->constrained(); // required
-    $table->foreignId('category')->nullable()->constrained(); // nullable
-    $table->uuid(); // required
-    $table->ulid()->nullable(); // nullable
+    $table->foreignId('user_id')->constrained(); // required
+    $table->foreignId('category')->nullable(); // nullable
+    $table->uuid(); // required (but will be changed later) 👇
+    $table->ulid()->nullable(); // nullable (but will be changed later) 👇
     $table->boolean('active')->default(false); // default
     $table->string('title'); // required
-    $table->json('description')->nullable();
+    $table->json('description')->nullable(); // nullable (but will be changed later) 👇
     $table->string('slug')->nullable()->unique(); // nullable
     $table->timestamps(); // nullable
     $table->softDeletes(); // nullable
+});
+
+// later migration..
+Schema::table('posts', function(Blueprint $table){
+    $table->json('description')->change(); // required
+    $table->ulid()->change(); // required
+    $table->uuid()->nullable()->change(); // nullable
 });
 ```
 
@@ -86,7 +93,7 @@ class Post extends Model
 - Now use the trait as follows
 
 ```php
-Post::requiredFields(); // returns ['user', 'uuid', 'title]
+Post::requiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
 ```
 
 ## Why?

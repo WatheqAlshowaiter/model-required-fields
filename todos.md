@@ -10,7 +10,17 @@
 - [x] use phpunit instead of pest
 - [ ] test code for SQL server
 - [ ] try previous versions of laravel until laravel 6
+    - [x] 11
+    - [ ] 10
+    - [ ] 9
+    - [ ] 8
+    - [ ] 7
+    - [ ] 6
 - [ ] try previous versions of php until php 7.4
+    - [ ] 8.2
+    - [ ] 8.1
+    - [ ] 8.0
+    - [ ] 7.4
 - [ ] add GitHub action for all supported SQL databases
 - [ ] add GitHub action for all supported laravel versions
 - [ ] add GitHub action for all supported php versions
