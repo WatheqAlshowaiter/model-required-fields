@@ -3,23 +3,38 @@
 use WatheqAlshowaiter\ModelRequiredFields\Models\AnotherParentTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ChildTestModel;
 use WatheqAlshowaiter\ModelRequiredFields\Models\ParentTestModel;
+use WatheqAlshowaiter\ModelRequiredFields\Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-it('get required fields for parent model', function () {
-    expect(ParentTestModel::getRequiredFields())->toBe([
-        'name',
-        'email',
-    ]);
-});
+class RequiredFieldsTest extends TestCase
+{
+    use RefreshDatabase;
 
-it('get required fields for another parent model', function () {
-    expect(AnotherParentTestModel::getRequiredFields())->toBe([
-        'uuid',
-        'ulid',
-    ]);
-});
+    public function test_get_required_fields_for_parent_model()
+    {
+        $this->assertEquals([
+            'name',
+            'email',
+        ], ParentTestModel::getRequiredFields());
 
-it('get required fields for child model', function () {
-    expect(ChildTestModel::getRequiredFields())->toBe([
-        'parent_id',
-    ]);
-});
+        $this->assertNotEquals([
+            'email',
+            'name',
+        ], ParentTestModel::getRequiredFields());
+    }
+
+    public function test_get_required_fields_for_another_parent_model()
+    {
+        $this->assertEquals([
+            'uuid',
+            'ulid',
+        ], AnotherParentTestModel::getRequiredFields());
+    }
+
+    public function test_get_required_fields_for_child_model()
+    {
+        $this->assertEquals([
+            'parent_id',
+        ], ChildTestModel::getRequiredFields());
+    }
+}
