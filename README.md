@@ -74,11 +74,10 @@ Schema::create('posts', function (Blueprint $table) {
 // later migration..
 Schema::table('posts', function(Blueprint $table){
     $table->json('description')->change(); // required
-    $table->ulid()->change(); // required
+    $table->ulid()->nullable(false)->change(); // required
     $table->uuid()->nullable()->change(); // nullable
 });
 ```
-
 - We can add the `RequiredFields` trait to the `Post` Model
 
 ```php

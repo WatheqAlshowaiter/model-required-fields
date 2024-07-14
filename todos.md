@@ -17,8 +17,8 @@
     - [ ] 7
     - [ ] 6
 - [ ] try previous versions of php until php 7.4
-    - [ ] 8.2
-    - [ ] 8.1
+    - [x] 8.2
+    - [x] 8.1
     - [ ] 8.0
     - [ ] 7.4
 - [ ] add GitHub action for all supported SQL databases
