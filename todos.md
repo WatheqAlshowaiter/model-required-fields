@@ -11,7 +11,7 @@
 - [ ] test code for SQL server
 - [ ] try previous versions of laravel until laravel 6
     - [x] 11
-    - [ ] 10
+    - [x] 10
     - [ ] 9
     - [ ] 8
     - [ ] 7
