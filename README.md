@@ -59,11 +59,11 @@ let's say the `Post` model has these fields
 ```php
 Schema::create('posts', function (Blueprint $table) {
     $table->uuid('id')->primary(); // primary key
-    $table->foreignUlid('user')->constrained(); // required 
-    $table->foreignId('category')->nullable()->constrained(); // nullable 
+    $table->foreignUlid('user')->constrained(); // required
+    $table->foreignId('category')->nullable()->constrained(); // nullable
     $table->uuid(); // required
-    $table->ulid()->nullable(); // nullable 
-    $table->boolean('active')->default(false); // default 
+    $table->ulid()->nullable(); // nullable
+    $table->boolean('active')->default(false); // default
     $table->string('title'); // required
     $table->json('description')->nullable();
     $table->string('slug')->nullable()->unique(); // nullable
@@ -116,8 +116,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ## Contributing
 
-This package is simple yet completed in its focused scope, but if you have any ideas or suggestions to improve it or fix
-bugs, your contribution is welcome. I encourage you to submit an issue first, then do a pull request.
+If you have any ideas or suggestions to improve it or fix bugs, your contribution is welcome. I encourage you to look at [todos](./todos.md) which are the most important features need to be added. If you have something different, submit an issue first to discus or report a bug, then do a pull request.
 
 ## Security Vulnerabilities
 
