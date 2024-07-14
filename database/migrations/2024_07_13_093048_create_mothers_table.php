@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('another_parent_test_models', function (Blueprint $table) {
+        Schema::create('mothers', function (Blueprint $table) {
             $table->ulid('id')->primary(); // primary key => ignored
             $table->enum('types', ['one', 'two'])->default('one'); // default => ignored
             $table->uuid('uuid'); // required

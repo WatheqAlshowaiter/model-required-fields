@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use WatheqAlshowaiter\ModelRequiredFields\Models\AnotherParentTestModel;
-use WatheqAlshowaiter\ModelRequiredFields\Models\ChildTestModel;
-use WatheqAlshowaiter\ModelRequiredFields\Models\ParentTestModel;
+use WatheqAlshowaiter\ModelRequiredFields\Models\Father;
+use WatheqAlshowaiter\ModelRequiredFields\Models\Mother;
+use WatheqAlshowaiter\ModelRequiredFields\Models\Son;
 use WatheqAlshowaiter\ModelRequiredFields\Tests\TestCase;
 
 class RequiredFieldsTest extends TestCase
@@ -15,12 +15,12 @@ class RequiredFieldsTest extends TestCase
         $this->assertEquals([
             'name',
             'email',
-        ], ParentTestModel::getRequiredFields());
+        ], Father::getRequiredFields());
 
         $this->assertNotEquals([
             'email',
             'name',
-        ], ParentTestModel::getRequiredFields());
+        ], Father::getRequiredFields());
     }
 
     public function test_get_required_fields_for_another_parent_model()
@@ -28,13 +28,13 @@ class RequiredFieldsTest extends TestCase
         $this->assertEquals([
             'uuid',
             'ulid',
-        ], AnotherParentTestModel::getRequiredFields());
+        ], Mother::getRequiredFields());
     }
 
     public function test_get_required_fields_for_child_model()
     {
         $this->assertEquals([
             'parent_id',
-        ], ChildTestModel::getRequiredFields());
+        ], Son::getRequiredFields());
     }
 }
