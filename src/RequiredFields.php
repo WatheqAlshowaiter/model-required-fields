@@ -12,68 +12,85 @@ trait RequiredFields
      * Get only required fields for the model that
      * need to be added while creating a new record in the database.
      * So, we ignore auto_increment, primary keys, nullable and default fields.
+     * @return array|string
      */
-    public static function getRequiredFields(): array
+    public static function getRequiredFields()
     {
         if ((float) App::version() < 10) {
             return self::getRequiredFieldsForOlderVersions();
         }
 
         $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
-            ->filter(fn ($index) => $index['primary'])
+            ->filter(function ($index) {
+                return $index['primary'];
+            })
             ->pluck('columns')
             ->flatten()
             ->toArray();
 
         return collect(Schema::getColumns((new self())->getTable()))
-            ->reject(
-                fn ($column) => $column['auto_increment']
+            ->reject(function ($column) use ($primaryIndex) {
+                return $column['auto_increment']
                     || $column['nullable']
                     || $column['default'] != null
-                    || in_array($column['name'], $primaryIndex)
-            )
+                    || in_array($column['name'], $primaryIndex);
+            })
             ->pluck('name')
             ->toArray();
     }
 
     /**
      * @todo convert this method to private after testing
+     * @return array|string
      */
-    public static function getRequiredFieldsForOlderVersions(): array|string
+    public static function getRequiredFieldsForOlderVersions()
     {
         $databaseDriver = DB::connection()->getDriverName();
 
-        return match ($databaseDriver) {
-            'sqlite' => self::getRequiredFieldsForSqlite(),
-            'mysql', 'mariadb' => self::getRequiredFieldsForMysqlAndMariaDb(),
-            'pgsql' => self::getRequiredFieldsForPostgres(),
-            'sqlsrv' => self::getRequiredFieldsForSqlServer(),
-            default => 'NOT SUPPORTED DATABASE DRIVER'
-        };
+        switch ($databaseDriver) {
+            case 'sqlite':
+                return self::getRequiredFieldsForSqlite();
+            case 'mysql':
+            case 'mariadb':
+                return self::getRequiredFieldsForMysqlAndMariaDb();
+            case 'pgsql':
+                return self::getRequiredFieldsForPostgres();
+            case 'sqlsrv':
+                return self::getRequiredFieldsForSqlServer();
+            default:
+                return 'NOT SUPPORTED DATABASE DRIVER';
+        }
     }
 
-    private static function getRequiredFieldsForSqlite(): array
+    /**
+     * @return array
+     */
+    private static function getRequiredFieldsForSqlite()
     {
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select("PRAGMA table_info($table)");
 
         // convert stdClass object to array
-        $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
+        $queryResult = array_map(function ($column) {
+            return (array) $column;
+        }, $queryResult);
 
         return collect($queryResult)
-            ->reject(
-                fn ($column) => $column['pk']
+            ->reject(function ($column) {
+                return  $column['pk']
                     || $column['dflt_value'] != null
-                    || ! $column['notnull']
-            )
+                    || !$column['notnull'];
+            })
             ->pluck('name')
             ->toArray();
     }
 
-    private static function getRequiredFieldsForMysqlAndMariaDb(): array
+    /**
+     * @return array
+     */
+    private static function getRequiredFieldsForMysqlAndMariaDb()
     {
-
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select(
@@ -95,19 +112,24 @@ trait RequiredFields
         );
 
         // convert stdClass object to array
-        $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
+        $queryResult = array_map(function ($column) {
+            return (array) $column;
+        }, $queryResult);
 
         return collect($queryResult)
-            ->reject(
-                fn ($column) => $column['primary']
+            ->reject(function ($column) {
+                return $column['primary']
                     || $column['default'] != null
-                    || $column['nullable']
-            )
+                    || $column['nullable'];
+            })
             ->pluck('name')
             ->toArray();
     }
 
-    private static function getRequiredFieldsForPostgres(): array
+    /**
+     * @return array
+     */
+    private static function getRequiredFieldsForPostgres()
     {
 
         $table = self::getTableFromThisModel();
@@ -143,10 +165,14 @@ trait RequiredFields
                 i.indisprimary;
         ");
 
-        $primaryIndex = array_map(fn ($column) => (array) $column, $primaryIndex);
+        $primaryIndex = array_map(function ($column) {
+            return (array) $column;
+        }, $primaryIndex);
 
         $primaryIndex = collect($primaryIndex)
-            ->filter(fn ($index) => $index['primary'])
+            ->filter(function ($index) {
+                return $index['primary'];
+            })
             ->pluck('columns')
             ->flatten()
             ->toArray();
@@ -167,25 +193,26 @@ trait RequiredFields
         );
 
         // convert stdClass object children to array
-        $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
+        $queryResult = array_map(function ($column) {
+            return (array) $column;
+        }, $queryResult);
 
         return collect($queryResult)
-            ->reject(
-                fn ($column) => $column['default']
+            ->reject(function ($column) use ($primaryIndex) {
+                return $column['default']
                     || $column['nullable'] == 'YES'
-                    || in_array($column['name'], $primaryIndex)
-
-            )
+                    || in_array($column['name'], $primaryIndex);
+            })
             ->pluck('name')
             ->toArray();
     }
 
     /**
      * Not tested yet in machine with SQLSERVER
+     * @return array
      */
-    private static function getRequiredFieldsForSqlServer(): array
+    private static function getRequiredFieldsForSqlServer()
     {
-
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select(
@@ -208,14 +235,16 @@ trait RequiredFields
         );
 
         // convert stdClass object to array
-        $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
+        $queryResult = array_map(function ($column) {
+            return (array) $column;
+        }, $queryResult);
 
         return collect($queryResult)
-            ->reject(
-                fn ($column) => $column['primary']
+            ->reject(function ($column) {
+                return $column['primary']
                     || $column['default'] != null
-                    || $column['nullable']
-            )
+                    || $column['nullable'];
+            })
             ->pluck('name')
             ->toArray();
     }
@@ -223,7 +252,7 @@ trait RequiredFields
     /**
      * @return array|string|string[]
      */
-    private static function getTableFromThisModel(): string|array
+    private static function getTableFromThisModel()
     {
         $table = (new self())->getTable();
 
