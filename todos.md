@@ -12,8 +12,8 @@
 - [ ] try previous versions of laravel until laravel 6
     - [x] 11 => sqlite, mysql/mariadb(1st party supported in Laravel 11), postgres
     - [x] 10 => sqlite, mysql, postgres
-    - [ ] 9  => sqlite, mysql, postgres
-    - [ ] 8  =>
+    - [x] 9  => sqlite, mysql, postgres
+    - [x] 8  => sqlite, mysql, postgres
     - [ ] 7  =>
     - [ ] 6  =>
 - [ ] try previous versions of php until php 7.4
