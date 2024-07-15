@@ -2,6 +2,12 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.9.1 - 2024-07-15
+
+- support all Laravel versions until version 6
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.9.0...1.9.1
+
 ## 1.8.0 - 2024-07-15
 
 - support to laravel version 8
