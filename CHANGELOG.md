@@ -2,6 +2,13 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.6.0 - 2024-07-15
+
+- Fix bugs
+- Improve docs
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.5.1...1.6.0
+
 ## 1.5.0 - 2024-07-14
 
 - fix bug in migrations
