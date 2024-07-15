@@ -15,7 +15,7 @@ trait RequiredFields
      */
     public static function getRequiredFields(): array
     {
-        if (App::version() < 10) {
+        if ((float) App::version() < 10) {
             return self::getRequiredFieldsForOlderVersions();
         }
 
@@ -26,10 +26,11 @@ trait RequiredFields
             ->toArray();
 
         return collect(Schema::getColumns((new self())->getTable()))
-            ->reject(fn ($column) => $column['auto_increment']
-                || $column['nullable']
-                || $column['default'] != null
-                || in_array($column['name'], $primaryIndex)
+            ->reject(
+                fn ($column) => $column['auto_increment']
+                    || $column['nullable']
+                    || $column['default'] != null
+                    || in_array($column['name'], $primaryIndex)
             )
             ->pluck('name')
             ->toArray();
@@ -61,9 +62,10 @@ trait RequiredFields
         $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
 
         return collect($queryResult)
-            ->reject(fn ($column) => $column['pk']
-                || $column['dflt_value']
-                || ! $column['notnull']
+            ->reject(
+                fn ($column) => $column['pk']
+                    || $column['dflt_value']
+                    || ! $column['notnull']
             )
             ->pluck('name')
             ->toArray();
@@ -74,7 +76,8 @@ trait RequiredFields
 
         $table = self::getTableFromThisModel();
 
-        $queryResult = DB::select("
+        $queryResult = DB::select(
+            "
             SELECT
                 COLUMN_NAME AS name,
                 COLUMN_TYPE AS type,
@@ -95,9 +98,10 @@ trait RequiredFields
         $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
 
         return collect($queryResult)
-            ->reject(fn ($column) => $column['primary']
-                || $column['default'] != null
-                || $column['nullable']
+            ->reject(
+                fn ($column) => $column['primary']
+                    || $column['default'] != null
+                    || $column['nullable']
             )
             ->pluck('name')
             ->toArray();
@@ -147,7 +151,8 @@ trait RequiredFields
             ->flatten()
             ->toArray();
 
-        $queryResult = DB::select('
+        $queryResult = DB::select(
+            '
         SELECT
             is_nullable as nullable,
             column_name as name,
@@ -165,9 +170,10 @@ trait RequiredFields
         $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
 
         return collect($queryResult)
-            ->reject(fn ($column) => $column['default']
-                || $column['nullable'] == 'YES'
-                || in_array($column['name'], $primaryIndex)
+            ->reject(
+                fn ($column) => $column['default']
+                    || $column['nullable'] == 'YES'
+                    || in_array($column['name'], $primaryIndex)
 
             )
             ->pluck('name')
@@ -182,7 +188,8 @@ trait RequiredFields
 
         $table = self::getTableFromThisModel();
 
-        $queryResult = DB::select("
+        $queryResult = DB::select(
+            "
             SELECT
                 COLUMN_NAME AS name,
                 DATA_TYPE AS type,
@@ -204,9 +211,10 @@ trait RequiredFields
         $queryResult = array_map(fn ($column) => (array) $column, $queryResult);
 
         return collect($queryResult)
-            ->reject(fn ($column) => $column['primary']
-                || $column['default'] != null
-                || $column['nullable']
+            ->reject(
+                fn ($column) => $column['primary']
+                    || $column['default'] != null
+                    || $column['nullable']
             )
             ->pluck('name')
             ->toArray();
