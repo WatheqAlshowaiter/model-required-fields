@@ -64,7 +64,7 @@ trait RequiredFields
         return collect($queryResult)
             ->reject(
                 fn ($column) => $column['pk']
-                    || $column['dflt_value']
+                    || $column['dflt_value'] != null
                     || ! $column['notnull']
             )
             ->pluck('name')
