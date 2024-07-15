@@ -2,6 +2,12 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.7.0 - 2024-07-15
+
+support previous versions of `illuminate/contracts`
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.6.0...1.7.0
+
 ## 1.6.0 - 2024-07-15
 
 - Fix bugs
