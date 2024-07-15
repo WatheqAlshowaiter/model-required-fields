@@ -12,6 +12,7 @@ trait RequiredFields
      * Get only required fields for the model that
      * need to be added while creating a new record in the database.
      * So, we ignore auto_increment, primary keys, nullable and default fields.
+     *
      * @return array|string
      */
     public static function getRequiredFields()
@@ -41,6 +42,7 @@ trait RequiredFields
 
     /**
      * @todo convert this method to private after testing
+     *
      * @return array|string
      */
     public static function getRequiredFieldsForOlderVersions()
@@ -78,9 +80,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) {
-                return  $column['pk']
+                return $column['pk']
                     || $column['dflt_value'] != null
-                    || !$column['notnull'];
+                    || ! $column['notnull'];
             })
             ->pluck('name')
             ->toArray();
@@ -209,6 +211,7 @@ trait RequiredFields
 
     /**
      * Not tested yet in machine with SQLSERVER
+     *
      * @return array
      */
     private static function getRequiredFieldsForSqlServer()

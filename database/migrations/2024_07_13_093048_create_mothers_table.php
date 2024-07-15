@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
+use WatheqAlshowaiter\ModelRequiredFields\Constants;
 
 return new class extends Migration
 {
@@ -12,7 +14,11 @@ return new class extends Migration
             $table->ulid('id')->primary(); // primary key => ignored
             $table->enum('types', ['one', 'two'])->default('one'); // default => ignored
             $table->uuid('uuid'); // required
-            $table->ulid(); // required
+            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
+                $table->ulid('ulid'); // required
+            } else {
+                $table->string('ulid'); // required
+            }
             $table->json('description')->nullable();
         });
     }

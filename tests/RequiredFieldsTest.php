@@ -22,6 +22,7 @@ class RequiredFieldsTest extends TestCase
             'email',
         ], Father::getRequiredFieldsForOlderVersions());
     }
+
     public function test_get_required_fields_in_order(): void
     {
         $this->assertNotEquals([
