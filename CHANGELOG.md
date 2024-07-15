@@ -2,6 +2,15 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.8.0 - 2024-07-15
+
+- support to laravel version 8
+- support laravel versions before ulid
+- change code to support php 7.4
+- 
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.7.0...1.8.0
+
 ## 1.7.0 - 2024-07-15
 
 support previous versions of `illuminate/contracts`
