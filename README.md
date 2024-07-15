@@ -62,10 +62,10 @@ Schema::create('posts', function (Blueprint $table) {
     $table->foreignId('user_id')->constrained(); // required
     $table->foreignId('category')->nullable(); // nullable
     $table->uuid(); // required (but will be changed later) 👇
-    $table->ulid()->nullable(); // nullable (but will be changed later) 👇
+    $table->ulid('ulid')->nullable(); // nullable (but will be changed later) 👇
     $table->boolean('active')->default(false); // default
     $table->string('title'); // required
-    $table->json('description')->nullable(); // nullable (but will be changed later) 👇
+    $table->json('description'); // nullable (but will be changed later) 👇
     $table->string('slug')->nullable()->unique(); // nullable
     $table->timestamps(); // nullable
     $table->softDeletes(); // nullable
@@ -73,8 +73,8 @@ Schema::create('posts', function (Blueprint $table) {
 
 // later migration..
 Schema::table('posts', function(Blueprint $table){
-    $table->json('description')->change(); // required
-    $table->ulid()->nullable(false)->change(); // required
+    $table->json('description')->nullable(false)->change(); // required
+    $table->ulid('ulid')->nullable(false)->change(); // required
     $table->uuid()->nullable()->change(); // nullable
 });
 ```
