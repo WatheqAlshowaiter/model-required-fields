@@ -8,19 +8,18 @@
 - [x] remove `larastan`
 - [x] install pint and add it to pre-commit hook
 - [x] use phpunit instead of pest
-- [ ] test code for SQL server
-- [ ] try previous versions of laravel until laravel 6
+- [x] try previous versions of laravel until laravel 6
     - [x] 11 => sqlite, mysql/mariadb(1st party supported in Laravel 11), postgres
     - [x] 10 => sqlite, mysql, postgres
     - [x] 9  => sqlite, mysql, postgres
     - [x] 8  => sqlite, mysql, postgres
-    - [ ] 7  =>
-    - [ ] 6  =>
+    - [x] 7  => sqlite, mysql, postgres
+    - [x] 6  => sqlite, mysql, postgres
 - [ ] try previous versions of php until php 7.4
     - [x] 8.2
     - [x] 8.1
-    - [ ] 8.0
-    - [ ] 7.4
+    - [x] 8.0
+    - [x] 7.4
+- [ ] test code for SQL server
 - [ ] add GitHub action for all supported SQL databases
-- [ ] add GitHub action for all supported laravel versions
-- [ ] add GitHub action for all supported php versions
+- [ ] add GitHub action for all supported laravel versions with each php
