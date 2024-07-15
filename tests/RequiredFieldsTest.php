@@ -52,11 +52,11 @@ class RequiredFieldsTest extends TestCase
     public function test_get_required_fields_for_child_model(): void
     {
         $this->assertEquals([
-            'parent_id',
+            'father_id',
         ], Son::getRequiredFields());
 
         $this->assertEquals([
-            'parent_id',
+            'father_id',
         ], Son::getRequiredFieldsForOlderVersions());
     }
 }

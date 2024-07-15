@@ -11,9 +11,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mothers', function (Blueprint $table) {
-            $table->ulid('id')->primary(); // primary key => ignored
+            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
+                $table->ulid('id')->primary(); // primary key => ignored
+            } else {
+                $table->bigIncrements('id'); // primary key => ignored
+            }
+
             $table->enum('types', ['one', 'two'])->default('one'); // default => ignored
-            $table->uuid('uuid'); // required
+
+            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT) {
+                $table->uuid('uuid'); // required
+            } else {
+                $table->string('uuid');
+            }
             if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
                 $table->ulid('ulid'); // required
             } else {

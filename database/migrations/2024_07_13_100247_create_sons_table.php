@@ -11,19 +11,35 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sons', function (Blueprint $table) {
-            $table->uuid('id')->primary(); // primary key => ignored
-            $table->foreignId('parent_id')->constrained(); // required
+
+            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT) {
+                $table->uuid('id')->primary(); // primary key => ignored
+            } else {
+                $table->bigIncrements('id'); // primary key => ignored
+            }
+
+            if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT) {
+                $table->foreignId('father_id')->constrained(); // required
+            } else {
+                $table->unsignedBigInteger('father_id');
+                $table->foreign('father_id')->references('id')->on('fathers'); // required
+            }
+
             if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
                 $table->foreignUlid('mother_id')->nullable()->constrained(); // nullable => ignored
             } else {
-                $table->foreignId('mother_id')->nullable()->constrained(); // nullable => ignored
+                if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT) {
+                    $table->foreignId('mother_id')->nullable()->constrained(); // nullable => ignored
+                } else {
+                    $table->unsignedBigInteger('mother_id')->nullable();
+                    $table->foreign('mother_id')->references('id')->on('mothers');
+                }
             }
-            $table->foreignId('father_id')->nullable()->constrained(); // nullable => ignored
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('children');
+        Schema::dropIfExists('sons');
     }
 };
