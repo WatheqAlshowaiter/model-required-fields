@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use WatheqAlshowaiter\ModelRequiredFields\Constants;
 
-return new class extends Migration
+class CreateMothersTable extends Migration
 {
     public function up(): void
     {

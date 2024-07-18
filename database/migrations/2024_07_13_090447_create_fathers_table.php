@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateFathersTable extends Migration
 {
     public function up(): void
     {
@@ -17,7 +17,6 @@ return new class extends Migration
             $table->timestamps(); // created_at, updated_at => ignored because they are nullable
             $table->softDeletes(); // deleted_at => ignored because it is nullable
         });
-
     }
 
     public function down(): void
