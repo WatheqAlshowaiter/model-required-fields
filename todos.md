@@ -23,3 +23,4 @@
 - [ ] test code for SQL server
 - [ ] add GitHub action for all supported SQL databases
 - [ ] add GitHub action for all supported laravel versions with each php
+- [ ] add methods to include nullables, defaults, and primaryKeys
