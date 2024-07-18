@@ -10,7 +10,7 @@ class RequiredFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_get_required_fields_for_parent_model(): void
+    public function test_get_required_fields_for_parent_model()
     {
         $this->assertEquals([
             'name',
