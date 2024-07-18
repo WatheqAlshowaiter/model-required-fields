@@ -33,7 +33,7 @@ Schema::create('users', function (Blueprint $table) {
 });
 ```
 
-- Add the `RequiredFields` trait to your model
+-   Add the `RequiredFields` trait to your model
 
 ```php
 use WatheqAlshowaiter\ModelRequiredFields\RequiredFields;
@@ -44,7 +44,7 @@ class User extends Model
 }
 ```
 
-- Now use the trait as follows
+-   Now use the trait as follows
 
 ```php
 User::requiredFields(); // returns ['name', 'email', 'password']
@@ -78,7 +78,8 @@ Schema::table('posts', function(Blueprint $table){
     $table->uuid()->nullable()->change(); // nullable
 });
 ```
-- We can add the `RequiredFields` trait to the `Post` Model
+
+-   We can add the `RequiredFields` trait to the `Post` Model
 
 ```php
 use WatheqAlshowaiter\ModelRequiredFields\RequiredFields;
@@ -89,7 +90,7 @@ class Post extends Model
 }
 ```
 
-- Now use the trait as follows
+-   Now use the trait as follows
 
 ```php
 Post::requiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
@@ -98,17 +99,27 @@ Post::requiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
 ## Why?
 
 ### The problem
+
 I wanted to add tests to a legacy project that didn't have any. I wanted to add tests but couldn't find a factory, so I tried building them. However, it was hard to figure out the required fields for testing the basic functionality since some tables have too many fields.
 
 ### The Solution
+
 To solve this, I created a simple trait that retrieves the required fields easily. Later, I added support for older Laravel versions, as that was where most of the use cases occurred. Eventually, I extracted it into this package.
 
 So Briefly, This package is useful if:
 
-- you want to build factories or tests for projects you didn't start from scratch.
-- you are working with a legacy project and don't want to be faced with SQL errors when creating tables.
-- you have so many fields in your table and want to get the required fields fast.
-- or any use case you find it useful.
+-   you want to build factories or tests for projects you didn't start from scratch.
+-   you are working with a legacy project and don't want to be faced with SQL errors when creating tables.
+-   you have so many fields in your table and want to get the required fields fast.
+-   or any use case you find it useful.
+
+## Features
+
+✅ Supports Laravel versions: 11, 10, 9, 8, 7, and 6.
+✅ Supports PHP versions: 8.2, 8.1, 8.0, and 7.4.
+✅ Supports SQL databases: SQLite, MySQL/MariaDB, PostgreSQL, and SQL Server (not tested yet).
+✅ Fully automated testing with PHPUnit.
+✅ Full GitHub Action CI pipeline to format code and test against all Laravel and PHP versions.
 
 ## Testing
 
@@ -131,8 +142,8 @@ them.
 
 ## Credits
 
-- [Watheq Alshowaiter](https://github.com/WatheqAlshowaiter)
-- [All Contributors](../../contributors)
+-   [Watheq Alshowaiter](https://github.com/WatheqAlshowaiter)
+-   [All Contributors](../../contributors)
 
 ## License
 
