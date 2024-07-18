@@ -21,6 +21,6 @@
     - [x] 8.0
     - [x] 7.4
 - [x] add GitHub action for all supported laravel versions with each php
+- [x] add methods to include nullables, defaults, and primaryKeys
 - [ ] test code for SQL server
 - [ ] add GitHub action for all supported SQL databases
-- [ ] add methods to include nullables, defaults, and primaryKeys
