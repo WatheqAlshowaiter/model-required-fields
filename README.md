@@ -116,9 +116,13 @@ So Briefly, This package is useful if:
 ## Features
 
 ✅ Supports Laravel versions: 11, 10, 9, 8, 7, and 6.
+
 ✅ Supports PHP versions: 8.2, 8.1, 8.0, and 7.4.
+
 ✅ Supports SQL databases: SQLite, MySQL/MariaDB, PostgreSQL, and SQL Server (not tested yet).
+
 ✅ Fully automated testing with PHPUnit.
+
 ✅ Full GitHub Action CI pipeline to format code and test against all Laravel and PHP versions.
 
 ## Testing
