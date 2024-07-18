@@ -2,9 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use WatheqAlshowaiter\ModelRequiredFields\Constants;
-use Illuminate\Support\Facades\App;
 
 class CreateFathersTable extends Migration
 {
