@@ -119,6 +119,7 @@ class RequiredFieldsTest extends TestCase
         ));
         $this->assertEquals($expected, Father::getRequiredFieldsWithNullablesAndDefaults());
     }
+
     public function test_get_required_with_nullables_and_primary_key()
     {
         $expected = [
@@ -176,7 +177,7 @@ class RequiredFieldsTest extends TestCase
             'username',
             'created_at',
             'updated_at',
-            'deleted_at'
+            'deleted_at',
         ];
 
         $this->assertEquals($expected, Father::getRequiredFields(

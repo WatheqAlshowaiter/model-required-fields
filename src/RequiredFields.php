@@ -39,9 +39,9 @@ trait RequiredFields
         return collect(Schema::getColumns((new self())->getTable()))
             ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults, $withPrimaryKey) {
                 return
-                    $column['nullable']  && !$withNullables
-                    || $column['default'] != null && !$withDefaults
-                    || in_array($column['name'], $primaryIndex) && !$withPrimaryKey;
+                    $column['nullable'] && ! $withNullables
+                    || $column['default'] != null && ! $withDefaults
+                    || in_array($column['name'], $primaryIndex) && ! $withPrimaryKey;
             })
             ->pluck('name')
             ->toArray();
@@ -109,9 +109,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
-                return $column['pk'] && !$withPrimaryKey
-                    || $column['dflt_value'] != null && !$withDefaults
-                    || !$column['notnull'] && !$withNullables;
+                return $column['pk'] && ! $withPrimaryKey
+                    || $column['dflt_value'] != null && ! $withDefaults
+                    || ! $column['notnull'] && ! $withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -152,9 +152,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
-                return $column['primary'] && !$withPrimaryKey
-                    || $column['default'] != null && !$withDefaults
-                    || $column['nullable'] && !$withNullables;
+                return $column['primary'] && ! $withPrimaryKey
+                    || $column['default'] != null && ! $withDefaults
+                    || $column['nullable'] && ! $withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -237,9 +237,9 @@ trait RequiredFields
         return collect($queryResult)
             ->reject(function ($column) use ($primaryIndex, $withPrimaryKey, $withDefaults, $withNullables) {
                 return
-                    $column['default'] && !$withDefaults
-                    || $column['nullable'] == 'YES' && !$withNullables
-                    || in_array($column['name'], $primaryIndex) && !$withPrimaryKey;
+                    $column['default'] && ! $withDefaults
+                    || $column['nullable'] == 'YES' && ! $withNullables
+                    || in_array($column['name'], $primaryIndex) && ! $withPrimaryKey;
             })
             ->pluck('name')
             ->toArray();
@@ -283,9 +283,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) use ($withDefaults, $withNullables, $withPrimaryKey) {
-                return $column['primary'] && !$withPrimaryKey
-                    || $column['default'] != null && !$withDefaults
-                    || $column['nullable'] && !$withNullables;
+                return $column['primary'] && ! $withPrimaryKey
+                    || $column['default'] != null && ! $withDefaults
+                    || $column['nullable'] && ! $withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -320,10 +320,12 @@ trait RequiredFields
     {
         return self::getRequiredFields($withNullables = false, $withDefaults = true, $withPrimaryKey = true);
     }
+
     public static function getRequiredFieldsWithNullablesAndDefaults()
     {
         return self::getRequiredFields($withNullables = true, $withDefaults = true, $withPrimaryKey = false);
     }
+
     public static function getRequiredFieldsWithNullablesAndPrimaryKey()
     {
         return self::getRequiredFields($withNullables = true, $withDefaults = false, $withPrimaryKey = true);
