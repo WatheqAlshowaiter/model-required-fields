@@ -23,7 +23,7 @@ class RequiredFieldsTest extends TestCase
         ], Father::getRequiredFieldsForOlderVersions());
     }
 
-    public function test_get_required_fields_in_order(): void
+    public function test_get_required_fields_in_order()
     {
         $this->assertNotEquals([
             'email',
@@ -36,7 +36,7 @@ class RequiredFieldsTest extends TestCase
         ], Father::getRequiredFieldsForOlderVersions());
     }
 
-    public function test_get_required_fields_for_another_parent_model(): void
+    public function test_get_required_fields_for_another_parent_model()
     {
         $this->assertEquals([
             'uuid',
@@ -49,7 +49,7 @@ class RequiredFieldsTest extends TestCase
         ], Mother::getRequiredFieldsForOlderVersions());
     }
 
-    public function test_get_required_fields_for_child_model(): void
+    public function test_get_required_fields_for_child_model()
     {
         $this->assertEquals([
             'father_id',
