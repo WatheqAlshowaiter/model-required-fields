@@ -10,6 +10,8 @@ class RequiredFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
+    // todo: remove all getRequiredFieldsForOlderVersions()
+
     public function test_get_required_fields_for_parent_model()
     {
         $this->assertEquals([
