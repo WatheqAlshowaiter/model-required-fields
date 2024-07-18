@@ -21,11 +21,11 @@
     <logging>
         <junit outputFile="build/report.junit.xml"/>
     </logging>
-    <source>
+    <!-- <source>
         <include>
             <directory suffix=".php">./src</directory>
         </include>
-    </source>
+    </source> -->
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
