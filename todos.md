@@ -15,12 +15,12 @@
     - [x] 8  => sqlite, mysql, postgres
     - [x] 7  => sqlite, mysql, postgres
     - [x] 6  => sqlite, mysql, postgres
-- [ ] try previous versions of php until php 7.4
+- [x] try previous versions of php until php 7.4
     - [x] 8.2
     - [x] 8.1
     - [x] 8.0
     - [x] 7.4
+- [x] add GitHub action for all supported laravel versions with each php
 - [ ] test code for SQL server
 - [ ] add GitHub action for all supported SQL databases
-- [ ] add GitHub action for all supported laravel versions with each php
 - [ ] add methods to include nullables, defaults, and primaryKeys
