@@ -49,7 +49,6 @@
         }
     },
     "scripts": {
-        "clear": "@php vendor/bin/testbench package:purge-model-required-fields --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": [
             "@php vendor/bin/testbench workbench:build --ansi"
@@ -59,8 +58,7 @@
             "@composer run build",
             "@php vendor/bin/testbench serve"
         ],
-        "test": "vendor/bin/phpunit",
-        "format": "vendor/bin/pint"
+        "test": "vendor/bin/phpunit"
     },
     "config": {
         "sort-packages": true,
