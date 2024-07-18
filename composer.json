@@ -53,7 +53,7 @@
         "clear": "@php vendor/bin/testbench package:purge-model-required-fields --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": [
-            "@composer run prepare",
+            "@composer run dump-autoload",
             "@php vendor/bin/testbench workbench:build --ansi"
         ],
         "start": [
