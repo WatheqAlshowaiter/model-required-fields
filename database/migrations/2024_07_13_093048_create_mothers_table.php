@@ -37,4 +37,4 @@ class CreateMothersTable extends Migration
     {
         Schema::dropIfExists('another_parent_test_models');
     }
-};
+}

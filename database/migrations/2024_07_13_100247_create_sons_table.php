@@ -42,4 +42,4 @@ class CreateSonsTable extends Migration
     {
         Schema::dropIfExists('sons');
     }
-};
+}

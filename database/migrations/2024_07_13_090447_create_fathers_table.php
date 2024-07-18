@@ -23,4 +23,4 @@ class CreateFathersTable extends Migration
     {
         Schema::dropIfExists('parent_test_models');
     }
-};
+}
