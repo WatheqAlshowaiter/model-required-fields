@@ -60,12 +60,12 @@ let's say the `Post` model has these fields
 Schema::create('posts', function (Blueprint $table) {
     $table->uuid('id')->primary(); // primary key
     $table->foreignId('user_id')->constrained(); // required
-    $table->foreignId('category')->nullable(); // nullable
+    $table->foreignId('category_id')->nullable(); // nullable
     $table->uuid(); // required (but will be changed later) 👇
     $table->ulid('ulid')->nullable(); // nullable (but will be changed later) 👇
     $table->boolean('active')->default(false); // default
     $table->string('title'); // required
-    $table->json('description'); // nullable (but will be changed later) 👇
+    $table->json('description')->nullable(); // nullable (but will be changed later) 👇
     $table->string('slug')->nullable()->unique(); // nullable
     $table->timestamps(); // nullable
     $table->softDeletes(); // nullable
@@ -94,6 +94,112 @@ class Post extends Model
 
 ```php
 Post::requiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
+```
+
+### And more
+
+We have the flexibility to get required fields with nullables, defaults, primary keys, and a mix of them or return all fields. You can use these methods with these results:
+
+```php
+// The default parameters, only required fields
+Post::getRequiredFields(
+    $withNullables = false,
+    $withDefaults = false,
+    $withPrimaryKey = false
+);
+// or
+Post::getRequiredFields();
+// returns ['user_id', 'ulid', 'title', 'description']
+```
+
+```php
+// get required fields with nullables
+Post::getRequiredFields(
+    $withNullables = true,
+    $withDefaults = false,
+    $withPrimaryKey = false
+);
+// or
+Post::getRequiredFields(
+    $withNullables = true,
+);
+// or
+Post::getRequiredFields(true);
+// or
+Post::getRequiredFieldsWithNullables();
+// returns ['user_id', 'category_id', 'uuid', 'ulid', 'title', 'description', 'slug', 'created_at', 'updated_at', 'deleted_at']
+```
+
+```php
+// get required fields with defaults
+Post::getRequiredFields(
+    $withNullables = false,
+    $withDefaults = true,
+    $withPrimaryKey = false
+);
+// or
+Post::getRequiredFieldsWithDefaults();
+// returns ['user_id', 'ulid', 'active', 'title', 'description']
+```
+
+```php
+// get required fields with primary key
+Post::getRequiredFields(
+    $withNullables = false,
+    $withDefaults = false,
+    $withPrimaryKey = true
+);
+// or
+Post::getRequiredFieldsWithPrimaryKey();
+// returns ['id', 'user_id', 'ulid', 'title', 'description']
+```
+
+```php
+// get required fields with nullables and defaults
+Post::getRequiredFields(
+    $withNullables = true,
+    $withDefaults = true,
+    $withPrimaryKey = false
+);
+// or
+Post::getRequiredFieldsWithNullablesAndDefaults();
+// returns ['user_id', 'category_id', 'uuid', 'ulid', 'active', 'title', 'description', 'slug', 'created_at', 'updated_at', 'deleted_at']
+```
+
+```php
+// get required fields with nullables and primary key
+Post::getRequiredFields(
+    $withNullables = true,
+    $withDefaults = false,
+    $withPrimaryKey = true
+);
+// or
+Post::getRequiredFieldsWithNullablesAndPrimaryKey();
+// returns ['id', 'user_id', 'category_id', 'uuid', 'ulid', 'title', 'description', 'slug', 'created_at', 'updated_at', 'deleted_at']
+```
+
+```php
+// get required fields with defaults and primary key
+Post::getRequiredFields(
+    $withNullables = false,
+    $withDefaults = true,
+    $withPrimaryKey = true
+);
+// or
+Post::getRequiredFieldsWithDefaultsAndPrimaryKey();
+// returns ['id', 'user_id', 'ulid', 'active', 'title', 'description']
+```
+
+```php
+// get required fields with defaults and primary key
+Post::getRequiredFields(
+    $withNullables = true,
+    $withDefaults = true,
+    $withPrimaryKey = true
+);
+// or
+Post::getAllFields();
+// returns ['id', 'user_id', 'category_id', 'uuid', 'ulid', 'active', 'title', 'description', 'slug', 'created_at', 'updated_at', 'deleted_at']
 ```
 
 ## Why?
