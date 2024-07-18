@@ -14,9 +14,9 @@ class RequiredFieldsTest extends TestCase
 
     public function test_get_required_fields_for_parent_model()
     {
-        dump(
-            Illuminate\Support\Facades\DB::connection()->getDriverName()
-        );
+        // dump(
+        //     Illuminate\Support\Facades\DB::connection()->getDriverName()
+        // );
 
         $this->assertEquals([
             'name',
