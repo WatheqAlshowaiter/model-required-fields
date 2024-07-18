@@ -53,43 +53,211 @@ jobs:
       - name: Execute tests
         run: vendor/bin/phpunit
   test-laravel-10:
-        runs-on: ${{ matrix.os }}
-        timeout-minutes: 5
-        strategy:
-          fail-fast: true
-          matrix:
-            os: [ubuntu-latest]
-            stability: [prefer-stable]
-            include:
-              - laravel: 10.*
-                testbench: 8.*
-                php: 8.2
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        stability: [prefer-stable]
+        include:
+          - laravel: 10.*
+            testbench: 8.*
+            php: 8.2
 
-        name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
-        steps:
-          - name: Checkout code
-            uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-          - name: Setup PHP
-            uses: shivammathur/setup-php@v2
-            with:
-              php-version: ${{ matrix.php }}
-              extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
-              coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
 
-          - name: Setup problem matchers
-            run: |
-              echo "::add-matcher::${{ runner.tool_cache }}/php.json"
-              echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-          - name: Install dependencies
-            run: |
-              composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-              composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
-          - name: List Installed Dependencies
-            run: composer show -D
+      - name: List Installed Dependencies
+        run: composer show -D
 
-          - name: Execute tests
-            run: vendor/bin/phpunit
+      - name: Execute tests
+        run: vendor/bin/phpunit
+
+  test-laravel-9:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        stability: [prefer-stable]
+        include:
+          - laravel: 9.*
+            testbench: 7.*
+            php: 8.1
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+
+  test-laravel-8:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        stability: [prefer-stable]
+        include:
+          - laravel: 8.*
+            testbench: 6.*
+            php: 8.0
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+
+  test-laravel-7:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        stability: [prefer-stable]
+        include:
+          - laravel: 7.*
+            testbench: 5.*
+            php: 7.4
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+
+  test-laravel-6:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest]
+        stability: [prefer-stable]
+        include:
+          - laravel: 6.*
+            testbench: 4.*
+            php: 7.4
+
+    name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+          coverage: none
+
+      - name: Setup problem matchers
+        run: |
+          echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+          echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Install dependencies
+        run: |
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
