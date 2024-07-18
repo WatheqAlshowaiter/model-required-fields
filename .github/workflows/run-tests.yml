@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test-laravel-11:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     strategy:
@@ -24,14 +24,6 @@ jobs:
             testbench: 9.*
             carbon: ^2.63
             php: 8.3
-          - laravel: 10.*
-            testbench: 8.*
-            carbon: ^2.63
-            php: 8.2
-          - laravel: 9.*
-            testbench: 7.*
-            carbon: ^2.63
-            php: 8.1
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
