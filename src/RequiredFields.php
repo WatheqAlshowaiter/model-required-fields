@@ -15,10 +15,17 @@ trait RequiredFields
      *
      * @return array|string
      */
-    public static function getRequiredFields()
-    {
+    public static function getRequiredFields(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
         if ((float) App::version() < 10) {
-            return self::getRequiredFieldsForOlderVersions();
+            return self::getRequiredFieldsForOlderVersions(
+                $withNullables,
+                $withDefaults,
+                $withPrimaryKey
+            );
         }
 
         $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
@@ -30,11 +37,11 @@ trait RequiredFields
             ->toArray();
 
         return collect(Schema::getColumns((new self())->getTable()))
-            ->reject(function ($column) use ($primaryIndex) {
-                return $column['auto_increment']
-                    || $column['nullable']
-                    || $column['default'] != null
-                    || in_array($column['name'], $primaryIndex);
+            ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults, $withPrimaryKey) {
+                return
+                    $column['nullable']  && !$withNullables
+                    || $column['default'] != null && !$withDefaults
+                    || in_array($column['name'], $primaryIndex) && !$withPrimaryKey;
             })
             ->pluck('name')
             ->toArray();
@@ -45,20 +52,39 @@ trait RequiredFields
      *
      * @return array|string
      */
-    public static function getRequiredFieldsForOlderVersions()
-    {
+    public static function getRequiredFieldsForOlderVersions(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
         $databaseDriver = DB::connection()->getDriverName();
 
         switch ($databaseDriver) {
             case 'sqlite':
-                return self::getRequiredFieldsForSqlite();
+                return self::getRequiredFieldsForSqlite(
+                    $withNullables,
+                    $withDefaults,
+                    $withPrimaryKey
+                );
             case 'mysql':
             case 'mariadb':
-                return self::getRequiredFieldsForMysqlAndMariaDb();
+                return self::getRequiredFieldsForMysqlAndMariaDb(
+                    $withNullables,
+                    $withDefaults,
+                    $withPrimaryKey
+                );
             case 'pgsql':
-                return self::getRequiredFieldsForPostgres();
+                return self::getRequiredFieldsForPostgres(
+                    $withNullables,
+                    $withDefaults,
+                    $withPrimaryKey
+                );
             case 'sqlsrv':
-                return self::getRequiredFieldsForSqlServer();
+                return self::getRequiredFieldsForSqlServer(
+                    $withNullables,
+                    $withDefaults,
+                    $withPrimaryKey
+                );
             default:
                 return 'NOT SUPPORTED DATABASE DRIVER';
         }
@@ -67,8 +93,11 @@ trait RequiredFields
     /**
      * @return array
      */
-    private static function getRequiredFieldsForSqlite()
-    {
+    private static function getRequiredFieldsForSqlite(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select("PRAGMA table_info($table)");
@@ -79,10 +108,10 @@ trait RequiredFields
         }, $queryResult);
 
         return collect($queryResult)
-            ->reject(function ($column) {
-                return $column['pk']
-                    || $column['dflt_value'] != null
-                    || ! $column['notnull'];
+            ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
+                return $column['pk'] && !$withPrimaryKey
+                    || $column['dflt_value'] != null && !$withDefaults
+                    || !$column['notnull'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -91,8 +120,11 @@ trait RequiredFields
     /**
      * @return array
      */
-    private static function getRequiredFieldsForMysqlAndMariaDb()
-    {
+    private static function getRequiredFieldsForMysqlAndMariaDb(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select(
@@ -119,10 +151,10 @@ trait RequiredFields
         }, $queryResult);
 
         return collect($queryResult)
-            ->reject(function ($column) {
-                return $column['primary']
-                    || $column['default'] != null
-                    || $column['nullable'];
+            ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
+                return $column['primary'] && !$withPrimaryKey
+                    || $column['default'] != null && !$withDefaults
+                    || $column['nullable'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -131,8 +163,11 @@ trait RequiredFields
     /**
      * @return array
      */
-    private static function getRequiredFieldsForPostgres()
-    {
+    private static function getRequiredFieldsForPostgres(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
 
         $table = self::getTableFromThisModel();
 
@@ -200,22 +235,26 @@ trait RequiredFields
         }, $queryResult);
 
         return collect($queryResult)
-            ->reject(function ($column) use ($primaryIndex) {
-                return $column['default']
-                    || $column['nullable'] == 'YES'
-                    || in_array($column['name'], $primaryIndex);
+            ->reject(function ($column) use ($primaryIndex, $withPrimaryKey, $withDefaults, $withNullables) {
+                return
+                    $column['default'] && !$withDefaults
+                    || $column['nullable'] == 'YES' && !$withNullables
+                    || in_array($column['name'], $primaryIndex) && !$withPrimaryKey;
             })
             ->pluck('name')
             ->toArray();
     }
 
     /**
-     * Not tested yet in machine with SQLSERVER
+     * Not tested yet in machine with SQL SERVER
      *
      * @return array
      */
-    private static function getRequiredFieldsForSqlServer()
-    {
+    private static function getRequiredFieldsForSqlServer(
+        $withNullables = false,
+        $withDefaults = false,
+        $withPrimaryKey = false
+    ) {
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select(
@@ -243,10 +282,10 @@ trait RequiredFields
         }, $queryResult);
 
         return collect($queryResult)
-            ->reject(function ($column) {
-                return $column['primary']
-                    || $column['default'] != null
-                    || $column['nullable'];
+            ->reject(function ($column) use ($withDefaults, $withNullables, $withPrimaryKey) {
+                return $column['primary'] && !$withPrimaryKey
+                    || $column['default'] != null && !$withDefaults
+                    || $column['nullable'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -260,5 +299,42 @@ trait RequiredFields
         $table = (new self())->getTable();
 
         return str_replace('.', '__', $table);
+    }
+
+    public static function getRequiredFieldsWithNullables()
+    {
+        return self::getRequiredFields($withNullables = true, $withDefaults = false, $withPrimaryKey = false);
+    }
+
+    public static function getRequiredFieldsWithDefaults()
+    {
+        return self::getRequiredFields($withNullables = false, $withDefaults = true, $withPrimaryKey = false);
+    }
+
+    public static function getRequiredFieldsWithPrimaryKey()
+    {
+        return self::getRequiredFields($withNullables = false, $withDefaults = false, $withPrimaryKey = true);
+    }
+
+    public static function getRequiredFieldsWithDefaultsAndPrimaryKey()
+    {
+        return self::getRequiredFields($withNullables = false, $withDefaults = true, $withPrimaryKey = true);
+    }
+    public static function getRequiredFieldsWithNullablesAndDefaults()
+    {
+        return self::getRequiredFields($withNullables = true, $withDefaults = true, $withPrimaryKey = false);
+    }
+    public static function getRequiredFieldsWithNullablesAndPrimaryKey()
+    {
+        return self::getRequiredFields($withNullables = true, $withDefaults = false, $withPrimaryKey = true);
+    }
+
+    public static function getAllFields()
+    {
+        return self::getRequiredFields(
+            $withNullables = true,
+            $withDefaults = true,
+            $withPrimaryKey = true
+        );
     }
 }
