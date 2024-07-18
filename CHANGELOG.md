@@ -2,6 +2,13 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.10.0 - 2024-07-18
+
+- Make the package full backward compatible with laravel 11, 10, 9, 8, 7, and 6.
+- Make github action to test with all previos laravel version when push.
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.9.1...1.10.0
+
 ## 1.9.1 - 2024-07-15
 
 - support all Laravel versions until version 6
