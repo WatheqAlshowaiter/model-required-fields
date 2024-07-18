@@ -2,6 +2,12 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.11.0 - 2024-07-18
+
+- Add much more flexibility and options to the trait with test
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.9.1...1.11.0
+
 ## 1.10.0 - 2024-07-18
 
 - Make the package full backward compatible with laravel 11, 10, 9, 8, 7, and 6.
