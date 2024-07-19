@@ -204,7 +204,7 @@ jobs:
         image: mcr.microsoft.com/mssql/server:2019-latest
         env:
           ACCEPT_EULA: Y
-          SA_PASSWORD: Forge123
+          SQLSRV_DB_PASSWORD: Forge123
         ports:
           - 1433:1433
 
@@ -239,6 +239,6 @@ jobs:
         run: vendor/bin/phpunit
         env:
           DB_CONNECTION: sqlsrv
-          DB_DATABASE: master
-          DB_USERNAME: SA
-          DB_PASSWORD: Forge123
+          SQLSRV_DB_DATABASE: master
+          SQLSRV_DB_USERNAME: SA
+          SQLSRV_DB_PASSWORD: Forge123
