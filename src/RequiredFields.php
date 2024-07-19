@@ -265,8 +265,7 @@ trait RequiredFields
                 DATA_TYPE AS type,
                 CASE WHEN IS_NULLABLE = 'YES' THEN 1 ELSE 0 END AS nullable,
                 COLUMN_DEFAULT AS [default],
-                CASE WHEN COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1
-                     OR COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsPrimaryKey') = 1 THEN 1 ELSE 0 END AS [primary]
+                CASE WHEN COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsIdentity') = 1 OR COLUMNPROPERTY(OBJECT_ID(TABLE_SCHEMA + '.' + TABLE_NAME), COLUMN_NAME, 'IsPrimaryKey') = 1 THEN 1 END AS [primary]
             FROM
                 INFORMATION_SCHEMA.COLUMNS
             WHERE
