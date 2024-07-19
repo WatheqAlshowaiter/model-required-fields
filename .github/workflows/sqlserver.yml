@@ -14,12 +14,6 @@ jobs:
           SA_PASSWORD: Forge123
         ports:
           - 1433:1433
-        options: >
-          --health-cmd 'sqlcmd -Q "SELECT 1"'
-          --health-interval 10s
-          --health-start-period 10s
-          --health-timeout 10s
-          --health-retries 3
 
     strategy:
       fail-fast: true
@@ -46,16 +40,18 @@ jobs:
 
       - name: Wait for SQL Server to be ready
         run: |
-          while ! /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Forge123 -Q 'SELECT 1'; do
-            echo "Waiting for SQL Server to start..."
-            sleep 1
+          echo "Waiting for SQL Server to start..."
+          for i in {1..30}; do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Forge123 -Q "SELECT 1" && break
+            echo "SQL Server is starting up..."
+            sleep 2
           done
 
       - name: Run database migrations
         run: php artisan migrate --force
         env:
           DB_CONNECTION: sqlsrv
-          DB_HOST: 127.0.0.1
+          DB_HOST: localhost
           DB_PORT: 1433
           DB_DATABASE: master
           DB_USERNAME: SA
@@ -65,7 +61,7 @@ jobs:
         run: vendor/bin/phpunit
         env:
           DB_CONNECTION: sqlsrv
-          DB_HOST: 127.0.0.1
+          DB_HOST: localhost
           DB_PORT: 1433
           DB_DATABASE: master
           DB_USERNAME: SA
