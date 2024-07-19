@@ -1,6 +1,14 @@
-name: databases
+name: run-tests-on-databases
 
 on:
+  push:
+    paths:
+      - "**.php"
+      - ".github/workflows/run-tests.yml"
+      - ".github/workflows/run-tests-on-databases.yml"
+      - "phpunit.xml.dist"
+      - "composer.json"
+      - "composer.lock"
   workflow_dispatch:
 
 jobs:
@@ -147,9 +155,9 @@ jobs:
       postgresql:
         image: postgres:14
         env:
-          POSTGRES_DB: laravel
-          POSTGRES_USER: forge
-          POSTGRES_PASSWORD: password
+          PGSQL_DB_DATABASE: laravel
+          PGSQL_DB_USERNAME: forge
+          PGSQL_DB_PASSWORD: password
         ports:
           - 5432:5432
         options: --health-cmd=pg_isready --health-interval=10s --health-timeout=5s --health-retries=3

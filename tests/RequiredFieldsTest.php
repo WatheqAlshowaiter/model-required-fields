@@ -14,9 +14,9 @@ class RequiredFieldsTest extends TestCase
     {
         // todo after knowing how to change the database connection in the tests
         // and test it in github action, then delete this comments
-        // dump(
-        //     Illuminate\Support\Facades\DB::connection()->getDriverName()
-        // );
+        dump(
+            Illuminate\Support\Facades\DB::connection()->getDriverName()
+        );
 
         $this->assertEquals([
             'name',
