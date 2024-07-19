@@ -1,0 +1,52 @@
+name: run-tests-on-databases
+# todo: remove this and merge correct configs to run-on-database.yml
+on:
+  workflow_dispatch:
+
+jobs:
+  mssql:
+    runs-on: ubuntu-20.04
+
+    services:
+      sqlsrv:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          ACCEPT_EULA: Y
+          SQLSRV_DB_PASSWORD: Forge123
+        ports:
+          - 1433:1433
+
+    strategy:
+      fail-fast: true
+
+    name: SQL Server 2019
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, sqlsrv, pdo, pdo_sqlsrv, odbc, pdo_odbc, :php-psr
+          tools: composer:v2
+          coverage: none
+
+      - name: Set Framework version
+        run: composer config version "11.x-dev"
+
+      - name: Install dependencies
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 5
+          max_attempts: 5
+          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+
+      - name: Execute tests
+        run: vendor/bin/phpunit
+        env:
+          DB_CONNECTION: sqlsrv
+          SQLSRV_DB_DATABASE: master
+          SQLSRV_DB_USERNAME: SA
+          SQLSRV_DB_PASSWORD: Forge123

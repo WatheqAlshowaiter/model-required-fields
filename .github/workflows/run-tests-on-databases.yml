@@ -1,6 +1,7 @@
 name: run-tests-on-databases
 
 on:
+  # todo: retrun on push after correcting configs
   workflow_dispatch:
 
 jobs:
