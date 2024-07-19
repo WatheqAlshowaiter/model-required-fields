@@ -12,7 +12,7 @@ class CreateMothersTable extends Migration
     public function up(): void
     {
         Schema::create('mothers', function (Blueprint $table) {
-            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
+            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT && DB::connection()->getDriverName() !== 'sqlsrv') {
                 $table->ulid('id')->primary(); // primary key => ignored
             } else {
                 $table->bigIncrements('id'); // primary key => ignored

@@ -260,25 +260,25 @@ trait RequiredFields
 
         $primaryIndex = DB::select(
             'select col.name, type.name as type_name, '
-                .'col.max_length as length, col.precision as precision, col.scale as places, '
-                .'col.is_nullable as nullable, def.definition as [default], '
-                .'col.is_identity as autoincrement, col.collation_name as collation, '
-                .'com.definition as [expression], is_persisted as [persisted], '
-                .'cast(prop.value as nvarchar(max)) as comment '
-                .'from sys.columns as col '
-                .'join sys.types as type on col.user_type_id = type.user_type_id '
-                .'join sys.objects as obj on col.object_id = obj.object_id '
-                .'join sys.schemas as scm on obj.schema_id = scm.schema_id '
-                .'left join sys.default_constraints def on col.default_object_id = def.object_id and col.object_id = def.parent_object_id '
-                ."left join sys.extended_properties as prop on obj.object_id = prop.major_id and col.column_id = prop.minor_id and prop.name = 'MS_Description' "
-                .'left join sys.computed_columns as com on col.column_id = com.column_id and col.object_id = com.object_id '
-                ."where obj.type in ('U', 'V') and obj.name = ? and scm.name = schema_name() "
-                .'order by col.column_id',
+                . 'col.max_length as length, col.precision as precision, col.scale as places, '
+                . 'col.is_nullable as nullable, def.definition as [default], '
+                . 'col.is_identity as autoincrement, col.collation_name as collation, '
+                . 'com.definition as [expression], is_persisted as [persisted], '
+                . 'cast(prop.value as nvarchar(max)) as comment '
+                . 'from sys.columns as col '
+                . 'join sys.types as type on col.user_type_id = type.user_type_id '
+                . 'join sys.objects as obj on col.object_id = obj.object_id '
+                . 'join sys.schemas as scm on obj.schema_id = scm.schema_id '
+                . 'left join sys.default_constraints def on col.default_object_id = def.object_id and col.object_id = def.parent_object_id '
+                . "left join sys.extended_properties as prop on obj.object_id = prop.major_id and col.column_id = prop.minor_id and prop.name = 'MS_Description' "
+                . 'left join sys.computed_columns as com on col.column_id = com.column_id and col.object_id = com.object_id '
+                . "where obj.type in ('U', 'V') and obj.name = ? and scm.name = schema_name() "
+                . 'order by col.column_id',
             [$table],
         );
 
         $primaryIndex = array_map(function ($column) {
-            return (array) $column;
+            return $column;
         }, $primaryIndex);
 
         // todo remove later
@@ -288,13 +288,14 @@ trait RequiredFields
             'sqlserver',
         ]);
 
-        // $primaryIndex = collect($primaryIndex)
-        //     ->filter(function ($index) {
-        //         return $index['primary'];
-        //     })
-        //     ->pluck('columns')
-        //     ->flatten()
-        //     ->toArray();
+        $primaryIndex = collect($primaryIndex)
+            ->filter(function ($index) {
+                return $index['autoincrement']
+                    || $index['type_name'] == 'uniqueidentifier';
+            })
+            ->pluck('columns')
+            ->flatten()
+            ->toArray();
 
         $queryResult = DB::select(
             "
