@@ -1,4 +1,4 @@
-name: run-tests-on-databases
+name: mariadb
 # todo: remove this and merge correct configs to run-on-database.yml
 on:
   workflow_dispatch:
