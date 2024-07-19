@@ -160,7 +160,7 @@ trait RequiredFields
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
                 return $column['primary'] && !$withPrimaryKey
                     || $column['default'] != null && !$withDefaults
-                    || $column['nullable'] && !$withNullables;
+                    || $column['nullable'] == 1 && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
