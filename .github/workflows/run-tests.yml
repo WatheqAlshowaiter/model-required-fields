@@ -53,6 +53,7 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+
   test-laravel-10:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
