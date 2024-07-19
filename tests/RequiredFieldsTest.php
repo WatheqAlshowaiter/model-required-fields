@@ -201,6 +201,7 @@ class RequiredFieldsTest extends TestCase
             'ulid',
         ], Mother::getRequiredFields());
     }
+
     public function test_get_required_fields_for_mother_model_for_older_versions()
     {
         $this->assertEquals([
