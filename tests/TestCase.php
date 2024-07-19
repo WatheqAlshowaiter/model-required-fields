@@ -75,11 +75,11 @@ class TestCase extends Orchestra
         if ($dbConnection === 'sqlsrv') {
             $app['config']->set('database.connections.sqlsrv', [
                 'driver' => 'sqlsrv',
-                'host' => env('SQLSRV_DB_HOST', 'localhost'),
-                'port' => env('SQLSRV_DB_PORT', '1433'),
-                'database' => env('SQLSRV_DB_DATABASE', 'laravel'),
-                'username' => env('SQLSRV_DB_USERNAME', 'root'),
-                'password' => env('SQLSRV_DB_PASSWORD', ''),
+                'host' => env('DB_HOST', '127.0.0.1'),
+                'port' => env('DB_PORT', '1433'),
+                'database' => env('DB_DATABASE', 'master'),
+                'username' => env('DB_USERNAME', 'SA'),
+                'password' => env('DB_PASSWORD', 'Forge123'),
             ]);
         }
 
