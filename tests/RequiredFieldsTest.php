@@ -151,6 +151,7 @@ class RequiredFieldsTest extends TestCase
 
         $this->assertEquals($expected, Father::getRequiredFieldsWithNullablesAndPrimaryKey());
     }
+
     public function test_get_required_with_nullables_and_primary_key_for_older_versions()
     {
         $expected = [
