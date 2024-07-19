@@ -53,8 +53,20 @@ class RequiredFieldsTest extends TestCase
             'deleted_at',
         ];
         $this->assertEquals($expected, Father::getRequiredFields($withNullables = true));
-        $this->assertEquals($expected, Father::getRequiredFieldsForOlderVersions($withNullables = true));
         $this->assertEquals($expected, Father::getRequiredFieldsWithNullables());
+    }
+
+    public function test_get_required_fields_with_nullables_for_older_versions()
+    {
+        $expected = [
+            'name',
+            'email',
+            'username',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+        ];
+        $this->assertEquals($expected, Father::getRequiredFieldsForOlderVersions($withNullables = true));
     }
 
     public function test_get_required_fields_with_defaults()
@@ -137,12 +149,25 @@ class RequiredFieldsTest extends TestCase
             $withPrimaryKey = true
         ));
 
+        $this->assertEquals($expected, Father::getRequiredFieldsWithNullablesAndPrimaryKey());
+    }
+    public function test_get_required_with_nullables_and_primary_key_for_older_versions()
+    {
+        $expected = [
+            'id',
+            'name',
+            'email',
+            'username',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+        ];
+
         $this->assertEquals($expected, Father::getRequiredFieldsForOlderVersions(
             $withNullables = true,
             $withDefaults = false,
             $withPrimaryKey = true
         ));
-        $this->assertEquals($expected, Father::getRequiredFieldsWithNullablesAndPrimaryKey());
     }
 
     public function test_get_required_with_defaults_and_primary_key()
