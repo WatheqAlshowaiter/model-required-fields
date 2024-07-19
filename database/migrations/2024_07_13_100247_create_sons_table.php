@@ -26,10 +26,10 @@ class CreateSonsTable extends Migration
                 $table->foreign('father_id')->references('id')->on('fathers'); // required
             }
 
-            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
+            if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT && DB::connection()->getDriverName() !== 'sqlsrv') {
                 $table->foreignUlid('mother_id')->nullable()->constrained(); // nullable => ignored
             } else {
-                if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT && DB::connection()->getDriverName() !== 'sqlsrv') {
+                if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT) {
                     $table->foreignId('mother_id')->nullable()->constrained(); // nullable => ignored
                 } else {
                     $table->unsignedBigInteger('mother_id')->nullable();
