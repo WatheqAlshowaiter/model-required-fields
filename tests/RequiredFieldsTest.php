@@ -194,25 +194,30 @@ class RequiredFieldsTest extends TestCase
         $this->assertEquals($expected, Father::getAllFields());
     }
 
-    public function test_get_required_fields_for_another_parent_model()
+    public function test_get_required_fields_for_mother_model()
     {
         $this->assertEquals([
             'uuid',
             'ulid',
         ], Mother::getRequiredFields());
-
+    }
+    public function test_get_required_fields_for_mother_model_for_older_versions()
+    {
         $this->assertEquals([
             'uuid',
             'ulid',
         ], Mother::getRequiredFieldsForOlderVersions());
     }
 
-    public function test_get_required_fields_for_child_model()
+    public function test_get_required_fields_for_son_model()
     {
         $this->assertEquals([
             'father_id',
         ], Son::getRequiredFields());
+    }
 
+    public function test_get_required_fields_for_son_model_for_older_versions()
+    {
         $this->assertEquals([
             'father_id',
         ], Son::getRequiredFieldsForOlderVersions());
