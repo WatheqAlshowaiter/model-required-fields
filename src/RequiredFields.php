@@ -37,19 +37,21 @@ trait RequiredFields
             ->toArray();
 
         return collect(Schema::getColumns((new self())->getTable()))
-            ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults, $withPrimaryKey) {
+            ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults) {
                 return
-                    $column['nullable'] && ! $withNullables
-                    || $column['default'] != null && ! $withDefaults
-                    || in_array($column['name'], $primaryIndex) && ! $withPrimaryKey;
+                    $column['nullable'] && !$withNullables ||
+                    $column['default'] != null && !$withDefaults ||
+                    (in_array($column['name'], $primaryIndex));
             })
             ->pluck('name')
+            ->when($withPrimaryKey, function ($collection) use ($primaryIndex) {
+                return $collection->prepend(...$primaryIndex);
+            })
+            ->unique()
             ->toArray();
     }
 
     /**
-     * @todo convert this method to private after testing
-     *
      * @return array|string
      */
     public static function getRequiredFieldsForOlderVersions(
@@ -107,11 +109,12 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
+
         return collect($queryResult)
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
-                return $column['pk'] && ! $withPrimaryKey
-                    || $column['dflt_value'] != null && ! $withDefaults
-                    || ! $column['notnull'] && ! $withNullables;
+                return $column['pk'] && !$withPrimaryKey
+                    || $column['dflt_value'] != null && !$withDefaults
+                    || !$column['notnull'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -152,9 +155,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
-                return $column['primary'] && ! $withPrimaryKey
-                    || $column['default'] != null && ! $withDefaults
-                    || $column['nullable'] && ! $withNullables;
+                return $column['primary'] && !$withPrimaryKey
+                    || $column['default'] != null && !$withDefaults
+                    || $column['nullable'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
@@ -168,18 +171,12 @@ trait RequiredFields
         $withDefaults = false,
         $withPrimaryKey = false
     ) {
-
         $table = self::getTableFromThisModel();
 
         $primaryIndex = DB::select("
-                    SELECT
+            SELECT
                 ic.relname AS name,
-                string_agg(
-                    a.attname,
-                    ','
-                    ORDER BY
-                        indseq.ord
-                ) AS columns,
+                string_agg(a.attname, ',' ORDER BY indseq.ord) AS columns,
                 am.amname AS type,
                 i.indisunique AS unique,
                 i.indisprimary AS primary
@@ -193,14 +190,14 @@ trait RequiredFields
                 LEFT JOIN pg_attribute a ON a.attrelid = i.indrelid
                 AND a.attnum = indseq.num
             WHERE
-                tc.relname = 'users'
+                tc.relname = ?
                 AND tn.nspname = CURRENT_SCHEMA
             GROUP BY
                 ic.relname,
                 am.amname,
                 i.indisunique,
                 i.indisprimary;
-        ");
+        ", [$table]);
 
         $primaryIndex = array_map(function ($column) {
             return (array) $column;
@@ -216,34 +213,40 @@ trait RequiredFields
 
         $queryResult = DB::select(
             '
-        SELECT
-            is_nullable as nullable,
-            column_name as name,
-            column_default as default
-        FROM
-            information_schema.columns
-        WHERE
-            TABLE_NAME = ?
-        ORDER BY
-        ORDINAL_POSITION ASC',
+            SELECT
+                is_nullable AS nullable,
+                column_name AS name,
+                column_default AS default
+            FROM
+                information_schema.columns
+            WHERE
+                table_name = ?
+            ORDER BY
+                ordinal_position ASC',
             [$table]
         );
 
-        // convert stdClass object children to array
         $queryResult = array_map(function ($column) {
             return (array) $column;
         }, $queryResult);
 
-        return collect($queryResult)
+        $result = collect($queryResult)
             ->reject(function ($column) use ($primaryIndex, $withPrimaryKey, $withDefaults, $withNullables) {
-                return
-                    $column['default'] && ! $withDefaults
-                    || $column['nullable'] == 'YES' && ! $withNullables
-                    || in_array($column['name'], $primaryIndex) && ! $withPrimaryKey;
+                return ($column['default'] && !$withDefaults) ||
+                    ($column['nullable'] == 'YES' && !$withNullables) ||
+                    (in_array($column['name'], $primaryIndex));
             })
             ->pluck('name')
             ->toArray();
+
+        // Add primary key to the result if $withPrimaryKey is true
+        if ($withPrimaryKey) {
+            $result = array_unique(array_merge($primaryIndex, $result));
+        }
+
+        return $result;
     }
+
 
     /**
      * Not tested yet in machine with SQL SERVER
@@ -283,9 +286,9 @@ trait RequiredFields
 
         return collect($queryResult)
             ->reject(function ($column) use ($withDefaults, $withNullables, $withPrimaryKey) {
-                return $column['primary'] && ! $withPrimaryKey
-                    || $column['default'] != null && ! $withDefaults
-                    || $column['nullable'] && ! $withNullables;
+                return $column['primary'] && !$withPrimaryKey
+                    || $column['default'] != null && !$withDefaults
+                    || $column['nullable'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();

@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Schema;
 use WatheqAlshowaiter\ModelRequiredFields\Constants;
+use Illuminate\Support\Facades\DB;
 
 class CreateSonsTable extends Migration
 {
@@ -12,7 +13,7 @@ class CreateSonsTable extends Migration
     {
         Schema::create('sons', function (Blueprint $table) {
 
-            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT) {
+            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT && DB::connection()->getDriverName() !== 'mariadb') {
                 $table->uuid('id')->primary(); // primary key => ignored
             } else {
                 $table->bigIncrements('id'); // primary key => ignored
