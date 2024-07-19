@@ -47,16 +47,6 @@ jobs:
             sleep 2
           done
 
-      - name: Run database migrations
-        run: php artisan migrate --force
-        env:
-          DB_CONNECTION: sqlsrv
-          DB_HOST: localhost
-          DB_PORT: 1433
-          DB_DATABASE: master
-          DB_USERNAME: SA
-          DB_PASSWORD: Forge123
-
       - name: Execute tests
         run: vendor/bin/phpunit
         env:
