@@ -1,5 +1,4 @@
 name: sqlserver
-# todo: remove this and merge correct configs to run-on-database.yml
 on:
   workflow_dispatch:
 
@@ -15,6 +14,12 @@ jobs:
           SA_PASSWORD: Forge123
         ports:
           - 1433:1433
+        options: >
+          --health-cmd 'sqlcmd -Q "SELECT 1"'
+          --health-interval 10s
+          --health-start-period 10s
+          --health-timeout 10s
+          --health-retries 3
 
     strategy:
       fail-fast: true
@@ -37,11 +42,14 @@ jobs:
         run: composer config version "11.x-dev"
 
       - name: Install dependencies
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+
+      - name: Wait for SQL Server to be ready
+        run: |
+          while ! /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Forge123 -Q 'SELECT 1'; do
+            echo "Waiting for SQL Server to start..."
+            sleep 1
+          done
 
       - name: Run database migrations
         run: php artisan migrate --force
