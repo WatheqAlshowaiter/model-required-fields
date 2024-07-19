@@ -289,6 +289,13 @@ trait RequiredFields
             ->flatten()
             ->toArray();
 
+        // todo remove later
+        dump([
+            'primaryIndex' => $primaryIndex,
+            'table' => $table,
+            'sqlserver'
+        ]);
+
         $queryResult = DB::select(
             "
             SELECT
@@ -311,9 +318,9 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
-        if (!$withDefaults && !$withNullables && !$withPrimaryKey) {
-            dump($queryResult); // todo remove it later
-        }
+        // if (!$withDefaults && !$withNullables && !$withPrimaryKey) {
+        //     dump($queryResult); // todo remove it later
+        // }
 
         $result = collect($queryResult)
             ->reject(function ($column) use ($withDefaults, $withNullables, $primaryIndex) {
