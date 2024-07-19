@@ -152,7 +152,7 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
-        if(!$withNullables){
+        if($withNullables){
             dump($queryResult); // todo remove it later
         }
 
@@ -160,7 +160,7 @@ trait RequiredFields
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
                 return $column['primary'] && !$withPrimaryKey
                     || $column['default'] != null && !$withDefaults
-                    || $column['nullable'] == 1 && !$withNullables;
+                    || $column['nullable'] && !$withNullables;
             })
             ->pluck('name')
             ->toArray();
