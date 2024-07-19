@@ -282,6 +282,8 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
+        dump($queryResult); // todo remove it later
+
         return collect($queryResult)
             ->reject(function ($column) use ($withDefaults, $withNullables, $withPrimaryKey) {
                 return $column['primary'] && ! $withPrimaryKey
