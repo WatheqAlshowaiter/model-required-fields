@@ -152,6 +152,10 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
+        if(!$withNullables){
+            dump($queryResult); // todo remove it later
+        }
+
         return collect($queryResult)
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
                 return $column['primary'] && !$withPrimaryKey
