@@ -1,9 +1,11 @@
 name: Fix PHP code style issues
 
 on:
-  push:
-    paths:
-      - '**.php'
+  # todo return this back
+  # push:
+  # paths:
+  # - '**.php'
+  workflow_dispatch:
 
 permissions:
   contents: write

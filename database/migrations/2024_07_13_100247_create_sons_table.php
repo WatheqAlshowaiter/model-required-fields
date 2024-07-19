@@ -29,7 +29,7 @@ class CreateSonsTable extends Migration
             if ((float) App::version() >= Constants::VERSION_AFTER_ULID_SUPPORT) {
                 $table->foreignUlid('mother_id')->nullable()->constrained(); // nullable => ignored
             } else {
-                if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT) {
+                if ((float) App::version() >= Constants::VERSION_AFTER_FOREIGN_ID_SUPPORT && DB::connection()->getDriverName() !== 'sqlsrv') {
                     $table->foreignId('mother_id')->nullable()->constrained(); // nullable => ignored
                 } else {
                     $table->unsignedBigInteger('mother_id')->nullable();
