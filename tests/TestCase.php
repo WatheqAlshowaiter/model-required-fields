@@ -59,9 +59,9 @@ class TestCase extends Orchestra
                 'driver' => 'pgsql',
                 'host' => env('PGSQL_DB_HOST', '127.0.0.1'),
                 'port' => env('PGSQL_DB_PORT', '5432'),
-                'database' => env('PGSQL_DB_DATABASE', 'laravel'),
+                'database' => env('POSTGRES_DB', 'laravel'),
                 'username' => env('POSTGRES_USER', 'forge'),
-                'password' => env('POSTGRES_PASSWORD', ''),
+                'password' => env('POSTGRES_PASSWORD', 'password'),
             ]);
         }
 
