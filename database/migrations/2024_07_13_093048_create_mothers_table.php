@@ -20,7 +20,7 @@ class CreateMothersTable extends Migration
 
             $table->enum('types', ['one', 'two'])->default('one'); // default => ignored
 
-            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT &&  DB::connection()->getDriverName() !== 'mariadb') {
+            if ((float) App::version() >= Constants::VERSION_AFTER_UUID_SUPPORT && DB::connection()->getDriverName() !== 'mariadb') {
                 $table->uuid('uuid'); // required
             } else {
                 $table->string('uuid');
