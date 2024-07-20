@@ -28,16 +28,16 @@ trait RequiredFields
             );
         }
 
-        if (DB::connection()->getDriverName() == 'mariadb') { // mariadb has special case for nullables
-            dump(
-                Schema::getColumns((new self())->getTable()) // todo remove it later
-            );
-            return self::getRequiredFieldsForOlderVersions(
-                $withNullables,
-                $withDefaults,
-                $withPrimaryKey
-            );
-        }
+        // if (DB::connection()->getDriverName() == 'mariadb') { // mariadb has special case for nullables
+        //     // dump(
+        //     //     Schema::getColumns((new self())->getTable()) // todo remove it later
+        //     // );
+        //     return self::getRequiredFieldsForOlderVersions(
+        //         $withNullables,
+        //         $withDefaults,
+        //         $withPrimaryKey
+        //     );
+        // }
 
         $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
             ->filter(function ($index) {
@@ -48,6 +48,13 @@ trait RequiredFields
             ->toArray();
 
         return collect(Schema::getColumns((new self())->getTable()))
+            ->map(function ($column) { // specific to mariadb
+                if ($column['default'] == 'NULL') {
+                    $column['default'] = null;
+                }
+
+                return $column;
+            })
             ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults) {
                 return
                     $column['nullable'] && !$withNullables ||
