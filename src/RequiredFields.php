@@ -28,6 +28,14 @@ trait RequiredFields
             );
         }
 
+        if (DB::connection()->getDriverName() == 'mariadb'){ // mariadb has special case for nullables
+            return self::getRequiredFieldsForOlderVersions(
+                $withNullables,
+                $withDefaults,
+                $withPrimaryKey
+            );
+        }
+
         $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
             ->filter(function ($index) {
                 return $index['primary'];
