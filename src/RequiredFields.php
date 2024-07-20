@@ -29,6 +29,9 @@ trait RequiredFields
         }
 
         if (DB::connection()->getDriverName() == 'mariadb') { // mariadb has special case for nullables
+            dump(
+                Schema::getColumns((new self())->getTable()) // todo remove it later
+            );
             return self::getRequiredFieldsForOlderVersions(
                 $withNullables,
                 $withDefaults,
@@ -44,9 +47,6 @@ trait RequiredFields
             ->flatten()
             ->toArray();
 
-        dump(
-            Schema::getColumns((new self())->getTable()) // todo remove it later
-        );
         return collect(Schema::getColumns((new self())->getTable()))
             ->reject(function ($column) use ($primaryIndex, $withNullables, $withDefaults) {
                 return
