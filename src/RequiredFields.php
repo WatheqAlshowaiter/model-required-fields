@@ -295,7 +295,7 @@ trait RequiredFields
 
         $primaryIndex = DB::select('
             SELECT
-                COL_NAME(ic.object_id, ic.column_id) AS ColumnName
+                COL_NAME(ic.object_id, ic.column_id) AS column
             FROM
                 sys.indexes AS i
                 INNER JOIN sys.index_columns AS ic
@@ -308,20 +308,24 @@ trait RequiredFields
                 AND o.name = ?
                 AND SCHEMA_NAME(o.schema_id) = schema_name()', [$table]);
 
-        dd(['primary index: ' => $primaryIndex]); // todo remove later
-
-        $primaryIndex = array_map(function ($column) {
-            return (array) $column;
-        }, $primaryIndex);
+        // dd(['primary index: '=> $primaryIndex]); // todo remove later
 
         $primaryIndex = collect($primaryIndex)
-            ->filter(function ($index) {
-                return $index['autoincrement']
-                    || $index['type_name'] == 'uniqueidentifier';
-            })
-            ->pluck('columns')
-            ->flatten()
+            ->pluck('column')
             ->toArray();
+
+        // $primaryIndex = array_map(function ($column) { // todo remove later
+        //     return (array) $column;
+        // }, $primaryIndex);
+
+        // $primaryIndex = collect($primaryIndex)
+        //     ->filter(function ($index) {
+        //         return $index['autoincrement']
+        //             || $index['type_name'] == 'uniqueidentifier';
+        //     })
+        //     ->pluck('columns')
+        //     ->flatten()
+        //     ->toArray();
 
         $queryResult = DB::select(
             "
@@ -350,28 +354,28 @@ trait RequiredFields
         // }
 
         // todo remove later
-        dump([
-            'primaryIndex' => $primaryIndex,
-            'table' => $table,
-            'sqlserver',
-        ]);
+        // dump([
+        //     'primaryIndex' => $primaryIndex,
+        //     'table' => $table,
+        //     'sqlserver',
+        // ]);
 
         $result = collect($queryResult)
-            ->reject(function ($column) use ($withDefaults, $withNullables, $primaryIndex) {
+            ->reject(function ($column) use ($withDefaults, $withNullables, $primaryIndex, $withPrimaryKey) {
                 return
                     // $column['primary'] && !$withPrimaryKey || //todo remove later
                     $column['default'] != null && !$withDefaults
                     || $column['nullable'] && !$withNullables
-                    || (in_array($column['name'], $primaryIndex));
+                    || (in_array($column['name'], $primaryIndex) && !$withPrimaryKey);
             })
             ->pluck('name')
             ->toArray();
 
         // Add primary key to the result if $withPrimaryKey is true
-        if ($withPrimaryKey) {
-            $result = array_unique(array_merge($primaryIndex, $result));
-            $result = array_filter($result);
-        }
+        // if ($withPrimaryKey) {
+        //     $result = array_unique(array_merge($primaryIndex, $result));
+        //     $result = array_filter($result);
+        // }
 
         return $result;
     }

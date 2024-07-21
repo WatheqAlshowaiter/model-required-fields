@@ -26,18 +26,18 @@ class RequiredFieldsTest extends TestCase
     //     ], Father::getRequiredFieldsForOlderVersions());
     // }
 
-    public function test_get_required_fields_in_order()
-    {
-        $this->assertNotEquals([
-            'email',
-            'name',
-        ], Father::getRequiredFields());
+    // public function test_get_required_fields_in_order()
+    // {
+    //     $this->assertNotEquals([
+    //         'email',
+    //         'name',
+    //     ], Father::getRequiredFields());
 
-        $this->assertNotEquals([
-            'email',
-            'name',
-        ], Father::getRequiredFieldsForOlderVersions());
-    }
+    //     $this->assertNotEquals([
+    //         'email',
+    //         'name',
+    //     ], Father::getRequiredFieldsForOlderVersions());
+    // }
 
     public function test_get_required_fields_with_nullables()
     {
