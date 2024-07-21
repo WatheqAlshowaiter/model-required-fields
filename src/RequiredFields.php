@@ -261,7 +261,7 @@ trait RequiredFields
     }
 
     /**
-     * Not tested yet in machine with SQL SERVER
+     * Not tested yet in machine with SQL SERVER todo remove this after fixing and in readme file (not tested)
      *
      * @return array
      */
@@ -308,7 +308,7 @@ trait RequiredFields
                 AND o.name = ?
                 AND SCHEMA_NAME(o.schema_id) = schema_name()', [$table]);
 
-        dd('primary index: ' . $primaryIndex); // todo remove later
+        dd(['primary index: ' => $primaryIndex]); // todo remove later
 
         $primaryIndex = array_map(function ($column) {
             return (array) $column;
