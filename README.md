@@ -228,7 +228,7 @@ So Briefly, This package is useful if:
 
 ✅ Supports SQL databases: SQLite, MySQL/MariaDB, PostgreSQL, and SQL Server.
 
-✅ Fully automated testing with PHPUnit.
+✅ Fully automated tested with PHPUnit.
 
 ✅ Full GitHub Action CI pipeline to format code and test against all Laravel and PHP versions.
 
