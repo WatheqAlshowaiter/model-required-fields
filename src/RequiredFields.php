@@ -28,17 +28,6 @@ trait RequiredFields
             );
         }
 
-        // if (DB::connection()->getDriverName() == 'mariadb') { // mariadb has special case for nullables
-        //     // dump(
-        //     //     Schema::getColumns((new self())->getTable()) // todo remove it later
-        //     // );
-        //     return self::getRequiredFieldsForOlderVersions(
-        //         $withNullables,
-        //         $withDefaults,
-        //         $withPrimaryKey
-        //     );
-        // }
-
         $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
             ->filter(function ($index) {
                 return $index['primary'];
@@ -170,20 +159,14 @@ trait RequiredFields
             return (array) $column;
         }, $queryResult);
 
-        // convert each column with "default" => "NULL" to "default" => null (specific to mariadb)
-        $queryResult = array_map(function ($column) {
-            if ($column['default'] == 'NULL') {
-                $column['default'] = null;
-            }
-
-            return $column;
-        }, $queryResult);
-
-        if ($withNullables) {
-            dump($queryResult); // todo remove it later
-        }
-
         return collect($queryResult)
+            ->map(function ($column) { // specific to mariadb
+                if ($column['default'] == 'NULL') {
+                    $column['default'] = null;
+                }
+
+                return $column;
+            })
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
                 return $column['primary'] && !$withPrimaryKey
                     || $column['default'] != null && !$withDefaults
@@ -420,104 +403,5 @@ trait RequiredFields
             $withDefaults = true,
             $withPrimaryKey = true
         );
-    }
-
-    // test method todo remove it later
-    public static function testMethod(
-        $withNullables = false,
-        $withDefaults = false,
-        $withPrimaryKey = false
-    ) {
-
-
-        $queryResult = [
-            [
-                "name" => "id",
-                "type" => "bigint(20) unsigned",
-                "nullable" => 0,
-                "default" => null,
-                "primary" => 1
-            ],
-            [
-                "name" => "active",
-                "type" => "tinyint(1)",
-                "nullable" => 0,
-                "default" => "0",
-                "primary" => 0
-            ],
-            [
-                "name" => "name",
-                "type" => "varchar(255)",
-                "nullable" => 0,
-                "default" => null,
-                "primary" => 0
-            ],
-            [
-                "name" => "email",
-                "type" => "varchar(255)",
-                "nullable" => 0,
-                "default" => null,
-                "primary" => 0
-            ],
-            [
-                "name" => "username",
-                "type" => "varchar(255)",
-                "nullable" => 1,
-                "default" => "NULL",
-                "primary" => 0
-            ],
-            [
-                "name" => "created_at",
-                "type" => "timestamp",
-                "nullable" => 1,
-                "default" => "NULL",
-                "primary" => 0
-            ],
-            [
-                "name" => "updated_at",
-                "type" => "timestamp",
-                "nullable" => 1,
-                "default" => "NULL",
-                "primary" => 0
-            ],
-            [
-                "name" => "deleted_at",
-                "type" => "timestamp",
-                "nullable" => 1,
-                "default" => "NULL",
-                "primary" => 0
-            ]
-        ];
-
-        $queryResult = array_map(function ($column) {
-            if ($column['default'] == 'NULL') {
-                $column['default'] = null;
-            }
-
-            return $column;
-        }, $queryResult);
-
-
-        dd($queryResult);
-
-        // ignore primary unless $withPrimaryKey is true
-        // ignore default unless $withDefaults is true
-        // ignore nullable unless $withNullables is
-        $result =   collect($queryResult)
-            ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
-                return $column['primary'] && !$withPrimaryKey
-                    || $column['default'] != null && !$withDefaults
-                    || $column['nullable'] && !$withNullables;
-            })
-            ->pluck('name')
-            ->toArray();
-
-        // Add primary key to the result if $withPrimaryKey is true
-        // if ($withPrimaryKey) {
-        //     $result = array_unique(array_merge($primaryIndex, $result));
-        // }
-
-        dd($result);
-        return $result;
     }
 }

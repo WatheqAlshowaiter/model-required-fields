@@ -10,14 +10,8 @@ class RequiredFieldsTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_get_required_fields_for_parent_model()
+    public function test_get_required_fields_for_father_model()
     {
-        // todo after knowing how to change the database connection in the tests
-        // and test it in github action, then delete this comments
-        dump(
-            Illuminate\Support\Facades\DB::connection()->getDriverName()
-        );
-
         $this->assertEquals([
             'name',
             'email',
