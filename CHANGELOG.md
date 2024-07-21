@@ -2,6 +2,12 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.12.0 - 2024-07-21
+
+- FIx bugs for mariadb
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.11.0...1.12.0
+
 ## 1.11.0 - 2024-07-18
 
 - Add much more flexibility and options to the trait with test
