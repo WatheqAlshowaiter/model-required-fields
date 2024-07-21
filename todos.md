@@ -23,5 +23,5 @@
 - [x] add GitHub action for all supported laravel versions with each php
 - [x] add methods to include nullables, defaults, and primaryKeys
 - [x] fix issues with mariadb database
-- [ ] test code for SQL server
-- [ ] add GitHub action for all supported SQL databases
+- [x] test code for SQL server
+- [x] add GitHub action for all supported SQL databases

@@ -1,5 +1,13 @@
 name: sqlserver
 on:
+  push:
+    paths:
+      - "**.php"
+      - ".github/workflows/tests-for-laravel-versions.yml"
+      - ".github/workflows/tests-for-databases.yml"
+      - "phpunit.xml.dist"
+      - "composer.json"
+      - "composer.lock"
   workflow_dispatch:
 
 jobs:
