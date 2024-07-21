@@ -351,6 +351,7 @@ trait RequiredFields
         // Add primary key to the result if $withPrimaryKey is true
         if ($withPrimaryKey) {
             $result = array_unique(array_merge($primaryIndex, $result));
+            $result = array_filter($result);
         }
 
         return $result;
