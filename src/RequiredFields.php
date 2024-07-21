@@ -295,7 +295,7 @@ trait RequiredFields
 
         $primaryIndex = DB::select('
             SELECT
-                COL_NAME(ic.object_id, ic.column_id) AS column
+                COL_NAME(ic.object_id, ic.column_id) AS [column]
             FROM
                 sys.indexes AS i
                 INNER JOIN sys.index_columns AS ic
