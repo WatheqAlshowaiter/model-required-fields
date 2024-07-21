@@ -225,7 +225,7 @@ So Briefly, This package is useful if:
 
 ✅ Supports PHP versions: 8.2, 8.1, 8.0, and 7.4.
 
-✅ Supports SQL databases: SQLite, MySQL/MariaDB, PostgreSQL, and SQL Server (not tested yet).
+✅ Supports SQL databases: SQLite, MySQL/MariaDB, PostgreSQL, and SQL Server.
 
 ✅ Fully automated testing with PHPUnit.
 

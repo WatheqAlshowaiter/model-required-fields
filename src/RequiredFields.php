@@ -261,8 +261,6 @@ trait RequiredFields
     }
 
     /**
-     * Not tested yet in machine with SQL SERVER todo remove this after fixing and in readme file (not tested)
-     *
      * @return array
      */
     private static function getRequiredFieldsForSqlServer(
