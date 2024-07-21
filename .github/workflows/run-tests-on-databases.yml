@@ -2,6 +2,14 @@ name: run-tests-on-databases
 
 on:
   # todo: retrun on push after correcting configs
+  # push:
+  #   paths:
+  #     - "**.php"
+  #     - ".github/workflows/run-tests.yml"
+  #     - ".github/workflows/run-tests-on-databases.yml"
+  #     - "phpunit.xml.dist"
+  #     - "composer.json"
+  #     - "composer.lock"
   workflow_dispatch:
 
 jobs:
