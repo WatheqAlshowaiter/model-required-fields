@@ -18,13 +18,13 @@ class RequiredFieldsTest extends TestCase
         ], Father::getRequiredFields());
     }
 
-    // public function test_get_required_fields_for_father_model_for_older_versions()
-    // {
-    //     $this->assertEquals([
-    //         'name',
-    //         'email',
-    //     ], Father::getRequiredFieldsForOlderVersions());
-    // }
+    public function test_get_required_fields_for_father_model_for_older_versions()
+    {
+        $this->assertEquals([
+            'name',
+            'email',
+        ], Father::getRequiredFieldsForOlderVersions());
+    }
 
     // public function test_get_required_fields_in_order()
     // {
