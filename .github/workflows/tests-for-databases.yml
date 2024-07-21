@@ -1,4 +1,4 @@
-name: run-tests-on-databases
+name: tests-for-databases
 
 on:
   # todo: retrun on push after correcting configs

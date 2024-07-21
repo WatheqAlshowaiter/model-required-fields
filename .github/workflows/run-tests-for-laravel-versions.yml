@@ -1,4 +1,4 @@
-name: run-tests
+name: tests-for-laravel-versions
 
 on:
   # todo: retrun on push after correcting configs
