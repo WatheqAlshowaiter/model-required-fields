@@ -204,7 +204,7 @@ jobs:
         image: mcr.microsoft.com/mssql/server:2019-latest
         env:
           ACCEPT_EULA: Y
-          SQLSRV_DB_PASSWORD: Forge123
+          SA_PASSWORD: Forge123
         ports:
           - 1433:1433
 
