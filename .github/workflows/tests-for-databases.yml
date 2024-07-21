@@ -1,15 +1,14 @@
 name: tests-for-databases
 
 on:
-  # todo: retrun on push after correcting configs
-  # push:
-  #   paths:
-  #     - "**.php"
-  #     - ".github/workflows/run-tests.yml"
-  #     - ".github/workflows/run-tests-on-databases.yml"
-  #     - "phpunit.xml.dist"
-  #     - "composer.json"
-  #     - "composer.lock"
+  push:
+    paths:
+      - "**.php"
+      - ".github/workflows/tests-for-laravel-versions.yml"
+      - ".github/workflows/tests-for-databases.yml"
+      - "phpunit.xml.dist"
+      - "composer.json"
+      - "composer.lock"
   workflow_dispatch:
 
 jobs:
@@ -230,16 +229,23 @@ jobs:
         run: composer config version "11.x-dev"
 
       - name: Install dependencies
-        uses: nick-fields/retry@v3
-        with:
-          timeout_minutes: 5
-          max_attempts: 5
-          command: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+        run: composer update --prefer-stable --prefer-dist --no-interaction --no-progress
+
+      - name: Wait for SQL Server to be ready
+        run: |
+          echo "Waiting for SQL Server to start..."
+          for i in {1..30}; do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Forge123 -Q "SELECT 1" && break
+            echo "SQL Server is starting up..."
+            sleep 2
+          done
 
       - name: Execute tests
         run: vendor/bin/phpunit
         env:
           DB_CONNECTION: sqlsrv
-          SQLSRV_DB_DATABASE: master
-          SQLSRV_DB_USERNAME: SA
-          SQLSRV_DB_PASSWORD: Forge123
+          DB_HOST: localhost
+          DB_PORT: 1433
+          DB_DATABASE: master
+          DB_USERNAME: SA
+          DB_PASSWORD: Forge123
