@@ -3,11 +3,10 @@
 # Model Required Fields
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/watheqalshowaiter/model-required-fields.svg?style=flat-square)](https://packagist.org/packages/watheqalshowaiter/model-required-fields)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/tests-for-laravel-versions?branch=main&label=tests-for-laravel-versions&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3Atests-for-laravel-versions+branch%3Amain)
-
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/tests-for-databases?branch=main&label=tests-for-databases&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3Atests-for-databases+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/watheqalshowaiter/model-required-fields.svg?style=flat-square)](https://packagist.org/packages/watheqalshowaiter/model-required-fields)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![GitHub Tests For Laravel Versions Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/tests-for-laravel-versions.yml?branch=main&label=tests-for-laravel-versions&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3A"tests-for-laravel-versions"+branch%3Amain)
+[![GitHub Tests For Databases Action Status](https://img.shields.io/github/actions/workflow/status/watheqalshowaiter/model-required-fields/tests-for-databases.yml?branch=main&label=tests-for-databases&style=flat-square)](https://github.com/watheqalshowaiter/model-required-fields/actions?query=workflow%3Atests-for-databases+branch%3Amain)
 
 Get the **required** model fields, excluding **primary keys**, **nullable** fields, and fields with **defaults**.
 
