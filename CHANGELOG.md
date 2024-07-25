@@ -2,6 +2,13 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 1.13.2 - 2024-07-25
+
+- refactor code
+- improve docs with adding `--dev` flag to composer require
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-required-fields/compare/1.13.1...1.13.2
+
 ## 1.13.1 - 2024-07-21
 
 fix badges in readme file
