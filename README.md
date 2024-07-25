@@ -15,8 +15,10 @@ Get the **required** model fields, excluding **primary keys**, **nullable** fiel
 You can install the package via Composer:
 
 ```bash
-composer require watheqalshowaiter/model-required-fields
+composer require watheqalshowaiter/model-required-fields --dev
 ```
+
+We prefer `--dev` because usually you will use it development, not in production.
 
 ## Usage
 
@@ -254,7 +256,7 @@ them.
 ## Credits
 
 -   [Watheq Alshowaiter](https://github.com/WatheqAlshowaiter)
--   [All Contributors](../../contributors)
+-   [All Contributors](../../contri****butors)
 
 ## License
 
