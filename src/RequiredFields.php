@@ -28,7 +28,7 @@ trait RequiredFields
             );
         }
 
-        $primaryIndex = collect(Schema::getIndexes((new self())->getTable()))
+        $primaryIndex = collect(Schema::getIndexes((new self)->getTable()))
             ->filter(function ($index) {
                 return $index['primary'];
             })
@@ -36,7 +36,7 @@ trait RequiredFields
             ->flatten()
             ->toArray();
 
-        return collect(Schema::getColumns((new self())->getTable()))
+        return collect(Schema::getColumns((new self)->getTable()))
             ->map(function ($column) { // specific to mariadb
                 if ($column['default'] == 'NULL') {
                     $column['default'] = null;
@@ -109,7 +109,7 @@ trait RequiredFields
         $queryResult = DB::select(/** @lang SQLite */ "PRAGMA table_info($table)");
 
         return collect($queryResult)
-            ->map(function ($column){
+            ->map(function ($column) {
                 return (array) $column;
             })
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
@@ -120,7 +120,6 @@ trait RequiredFields
             ->pluck('name')
             ->toArray();
     }
-
 
     private static function getRequiredFieldsForMysqlAndMariaDb(
         $withNullables = false,
@@ -148,7 +147,7 @@ trait RequiredFields
         );
 
         return collect($queryResult)
-            ->map(function ($column){
+            ->map(function ($column) {
                 return (array) $column;
             })
             ->map(function ($column) { // specific to mariadb
@@ -166,7 +165,6 @@ trait RequiredFields
             ->pluck('name')
             ->toArray();
     }
-
 
     private static function getRequiredFieldsForPostgres(
         $withNullables = false,
@@ -228,7 +226,7 @@ trait RequiredFields
         );
 
         return collect($queryResult)
-            ->map(function ($column){
+            ->map(function ($column) {
                 return (array) $column;
             })
             ->reject(function ($column) use ($primaryIndex, $withDefaults, $withNullables) {
@@ -288,7 +286,7 @@ trait RequiredFields
         );
 
         return collect($queryResult)
-            ->map(function ($column){
+            ->map(function ($column) {
                 return (array) $column;
             })
             ->reject(function ($column) use ($withDefaults, $withNullables, $primaryIndex, $withPrimaryKey) {
@@ -306,7 +304,7 @@ trait RequiredFields
      */
     private static function getTableFromThisModel()
     {
-        $table = (new self())->getTable();
+        $table = (new self)->getTable();
 
         return str_replace('.', '__', $table);
     }
