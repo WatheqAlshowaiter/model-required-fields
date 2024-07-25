@@ -13,7 +13,7 @@ trait RequiredFields
      * need to be added while creating a new record in the database.
      * So, we ignore auto_increment, primary keys, nullable and default fields.
      *
-     * @return array|string
+     * @return array
      */
     public static function getRequiredFields(
         $withNullables = false,
@@ -59,7 +59,7 @@ trait RequiredFields
     }
 
     /**
-     * @return array|string
+     * @return array
      */
     public static function getRequiredFieldsForOlderVersions(
         $withNullables = false,
@@ -99,9 +99,6 @@ trait RequiredFields
         }
     }
 
-    /**
-     * @return array
-     */
     private static function getRequiredFieldsForSqlite(
         $withNullables = false,
         $withDefaults = false,
@@ -109,14 +106,12 @@ trait RequiredFields
     ) {
         $table = self::getTableFromThisModel();
 
-        $queryResult = DB::select("PRAGMA table_info($table)");
-
-        // convert stdClass object to array
-        $queryResult = array_map(function ($column) {
-            return (array) $column;
-        }, $queryResult);
+        $queryResult = DB::select(/** @lang SQLite */ "PRAGMA table_info($table)");
 
         return collect($queryResult)
+            ->map(function ($column){
+                return (array) $column;
+            })
             ->reject(function ($column) use ($withNullables, $withDefaults, $withPrimaryKey) {
                 return $column['pk'] && ! $withPrimaryKey
                     || $column['dflt_value'] != null && ! $withDefaults
@@ -126,9 +121,7 @@ trait RequiredFields
             ->toArray();
     }
 
-    /**
-     * @return array
-     */
+
     private static function getRequiredFieldsForMysqlAndMariaDb(
         $withNullables = false,
         $withDefaults = false,
@@ -137,7 +130,7 @@ trait RequiredFields
         $table = self::getTableFromThisModel();
 
         $queryResult = DB::select(
-            "
+            /** @lang SQLite */ "
             SELECT
                 COLUMN_NAME AS name,
                 COLUMN_TYPE AS type,
@@ -154,12 +147,10 @@ trait RequiredFields
             [$table]
         );
 
-        // convert stdClass object to array
-        $queryResult = array_map(function ($column) {
-            return (array) $column;
-        }, $queryResult);
-
         return collect($queryResult)
+            ->map(function ($column){
+                return (array) $column;
+            })
             ->map(function ($column) { // specific to mariadb
                 if ($column['default'] == 'NULL') {
                     $column['default'] = null;
@@ -176,9 +167,7 @@ trait RequiredFields
             ->toArray();
     }
 
-    /**
-     * @return array
-     */
+
     private static function getRequiredFieldsForPostgres(
         $withNullables = false,
         $withDefaults = false,
@@ -186,7 +175,7 @@ trait RequiredFields
     ) {
         $table = self::getTableFromThisModel();
 
-        $primaryIndex = DB::select("
+        $primaryIndex = DB::select(/** @lang PostgreSQL */ "
             SELECT
                 ic.relname AS name,
                 string_agg(a.attname, ',' ORDER BY indseq.ord) AS columns,
@@ -212,11 +201,10 @@ trait RequiredFields
                 i.indisprimary;
         ", [$table]);
 
-        $primaryIndex = array_map(function ($column) {
-            return (array) $column;
-        }, $primaryIndex);
-
         $primaryIndex = collect($primaryIndex)
+            ->map(function ($index) {
+                return (array) $index;
+            })
             ->filter(function ($index) {
                 return $index['primary'];
             })
@@ -225,7 +213,7 @@ trait RequiredFields
             ->toArray();
 
         $queryResult = DB::select(
-            '
+            /** @lang PostgreSQL */ '
             SELECT
                 is_nullable AS nullable,
                 column_name AS name,
@@ -239,30 +227,23 @@ trait RequiredFields
             [$table]
         );
 
-        $queryResult = array_map(function ($column) {
-            return (array) $column;
-        }, $queryResult);
-
-        $result = collect($queryResult)
+        return collect($queryResult)
+            ->map(function ($column){
+                return (array) $column;
+            })
             ->reject(function ($column) use ($primaryIndex, $withDefaults, $withNullables) {
                 return ($column['default'] && ! $withDefaults) ||
                     ($column['nullable'] == 'YES' && ! $withNullables) ||
                     (in_array($column['name'], $primaryIndex));
             })
             ->pluck('name')
+            ->when($withPrimaryKey, function ($collection) use ($primaryIndex) {
+                return $collection->prepend(...$primaryIndex);
+            })
+            ->unique()
             ->toArray();
-
-        // Add primary key to the result if $withPrimaryKey is true
-        if ($withPrimaryKey) {
-            $result = array_unique(array_merge($primaryIndex, $result));
-        }
-
-        return $result;
     }
 
-    /**
-     * @return array
-     */
     private static function getRequiredFieldsForSqlServer(
         $withNullables = false,
         $withDefaults = false,
@@ -270,7 +251,7 @@ trait RequiredFields
     ) {
         $table = self::getTableFromThisModel();
 
-        $primaryIndex = DB::select('
+        $primaryIndex = DB::select(/** @lang TSQL */ '
             SELECT
                 COL_NAME(ic.object_id, ic.column_id) AS [column]
             FROM
@@ -290,7 +271,7 @@ trait RequiredFields
             ->toArray();
 
         $queryResult = DB::select(
-            "
+            /** @lang TSQL */ "
             SELECT
                 COLUMN_NAME AS name,
                 DATA_TYPE AS type,
@@ -306,12 +287,10 @@ trait RequiredFields
             [$table]
         );
 
-        // convert stdClass object to array
-        $queryResult = array_map(function ($column) {
-            return (array) $column;
-        }, $queryResult);
-
-        $result = collect($queryResult)
+        return collect($queryResult)
+            ->map(function ($column){
+                return (array) $column;
+            })
             ->reject(function ($column) use ($withDefaults, $withNullables, $primaryIndex, $withPrimaryKey) {
                 return
                     $column['default'] != null && ! $withDefaults
@@ -320,12 +299,10 @@ trait RequiredFields
             })
             ->pluck('name')
             ->toArray();
-
-        return $result;
     }
 
     /**
-     * @return array|string|string[]
+     * @return string
      */
     private static function getTableFromThisModel()
     {
