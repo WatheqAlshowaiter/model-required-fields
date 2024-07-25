@@ -256,7 +256,7 @@ them.
 ## Credits
 
 -   [Watheq Alshowaiter](https://github.com/WatheqAlshowaiter)
--   [All Contributors](../../contri****butors)
+-   [All Contributors](../../contributors)
 
 ## License
 
