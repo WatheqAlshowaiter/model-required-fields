@@ -18,7 +18,7 @@ You can install the package via Composer:
 composer require watheqalshowaiter/model-required-fields --dev
 ```
 
-We prefer `--dev` because usually you will use it development, not in production.
+We prefer `--dev` because usually you will use it in development, not in production.
 
 ## Usage
 
