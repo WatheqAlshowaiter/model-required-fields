@@ -99,7 +99,7 @@ trait RequiredFields
         }
     }
 
-    private static function getRequiredFieldsForSqlite(
+    protected static function getRequiredFieldsForSqlite(
         $withNullables = false,
         $withDefaults = false,
         $withPrimaryKey = false
@@ -121,7 +121,7 @@ trait RequiredFields
             ->toArray();
     }
 
-    private static function getRequiredFieldsForMysqlAndMariaDb(
+    protected static function getRequiredFieldsForMysqlAndMariaDb(
         $withNullables = false,
         $withDefaults = false,
         $withPrimaryKey = false
@@ -166,7 +166,7 @@ trait RequiredFields
             ->toArray();
     }
 
-    private static function getRequiredFieldsForPostgres(
+    protected static function getRequiredFieldsForPostgres(
         $withNullables = false,
         $withDefaults = false,
         $withPrimaryKey = false
@@ -242,7 +242,7 @@ trait RequiredFields
             ->toArray();
     }
 
-    private static function getRequiredFieldsForSqlServer(
+    protected static function getRequiredFieldsForSqlServer(
         $withNullables = false,
         $withDefaults = false,
         $withPrimaryKey = false
@@ -302,7 +302,7 @@ trait RequiredFields
     /**
      * @return string
      */
-    private static function getTableFromThisModel()
+    protected static function getTableFromThisModel()
     {
         $table = (new self)->getTable();
 
