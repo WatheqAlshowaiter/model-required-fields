@@ -12,7 +12,7 @@ class RequiredFieldsTest extends TestCase
 
     public function test_get_required_fields_for_father_model()
     {
-        $this->assertEquals([   
+        $this->assertEquals([
             'name',
             'email',
         ], Father::getRequiredFields());
