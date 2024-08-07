@@ -1,0 +1,16 @@
+name: Request Feature
+description: Request a new feature to this package
+title: "[Feature]: "
+labels: ["feature"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+            We're happy to hear about any feature you want to add to the package. The package has a small scope, but we're open to suggestions.
+    - type: textarea
+      id: notes
+      attributes:
+          label: Notes
+          description: Use this field to provide any notes that you feel might be relevant to the feature.
+      validations:
+          required: false
