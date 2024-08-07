@@ -13,4 +13,4 @@ body:
           label: Notes
           description: Use this field to provide any notes that you feel might be relevant to the feature.
       validations:
-          required: false
+          required: true

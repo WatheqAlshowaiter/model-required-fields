@@ -2,10 +2,10 @@
 
 ## Supported Versions
 
-These package versions are security supported.
+These package versions are security-supported.
 
 | Version | Supported          |
-| ------- | ------------------ |
+|---------|--------------------|
 | > 1.x.x | :white_check_mark: |
 
 ## Reporting a Vulnerability
