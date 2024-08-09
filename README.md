@@ -50,7 +50,7 @@ class User extends Model
 -   Now use the trait as follows
 
 ```php
-User::requiredFields(); // returns ['name', 'email', 'password']
+User::getRequiredFields(); // returns ['name', 'email', 'password']
 ```
 
 That's it!
@@ -96,7 +96,7 @@ class Post extends Model
 -   Now use the trait as follows
 
 ```php
-Post::requiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
+Post::getRequiredFields(); // returns ['user_id', 'ulid', 'title', 'description']
 ```
 
 ### And more
