@@ -15,7 +15,7 @@ class ModelRequiredFieldsServiceProvider extends ServiceProvider
     {
         // This migration works only in the package test
         if ($this->app->runningInConsole() && $this->app->environment() === 'testing') {
-            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../tests/database/migrations');
         }
     }
 }

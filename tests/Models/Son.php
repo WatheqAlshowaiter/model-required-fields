@@ -1,6 +1,6 @@
 <?php
 
-namespace WatheqAlshowaiter\ModelRequiredFields\Models;
+namespace WatheqAlshowaiter\ModelRequiredFields\Tests\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use WatheqAlshowaiter\ModelRequiredFields\RequiredFields;

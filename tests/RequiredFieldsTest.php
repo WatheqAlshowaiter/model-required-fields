@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use WatheqAlshowaiter\ModelRequiredFields\Models\Father;
-use WatheqAlshowaiter\ModelRequiredFields\Models\Mother;
-use WatheqAlshowaiter\ModelRequiredFields\Models\Son;
+use WatheqAlshowaiter\ModelRequiredFields\Tests\Models\Father;
+use WatheqAlshowaiter\ModelRequiredFields\Tests\Models\Mother;
+use WatheqAlshowaiter\ModelRequiredFields\Tests\Models\Son;
 use WatheqAlshowaiter\ModelRequiredFields\Tests\TestCase;
 
 class RequiredFieldsTest extends TestCase
