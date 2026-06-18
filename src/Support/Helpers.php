@@ -5,6 +5,8 @@ namespace WatheqAlshowaiter\ModelFields\Support;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
+use ReflectionClass;
+use ReflectionException;
 
 /**
  * Here are the shared logic across multiple files, now are FieldsService & ModelFieldsServiceProvider
@@ -24,14 +26,23 @@ class Helpers
      */
     public static function getModelDefaultAttributes($model)
     {
-        return array_keys((new $model)->getAttributes());
+        return array_keys(static::getModelAttributes($model));
     }
 
     public static function getTableFromThisModel($model)
     {
-        $table = (new $model)->getTable();
+        $table = static::getModelWithoutBooting($model)->getTable();
 
         return str_replace('.', '__', $table);
+    }
+
+    /**
+     * @return array
+     * @throws ReflectionException
+     */
+    public static function getModelAttributes($model)
+    {
+        return static::getModelWithoutBooting($model)->getAttributes();
     }
 
     /**
@@ -44,7 +55,7 @@ class Helpers
     public static function getObserverFilledFields($modelOrClass)
     {
         if ($modelOrClass instanceof Model) {
-            $model = $modelOrClass->newInstance();   // fresh instance of same model
+            $model = clone $modelOrClass;
             $modelClass = get_class($modelOrClass);
         } else {
             $model = new $modelOrClass;
@@ -62,5 +73,22 @@ class Helpers
         $dirtyNoNull = array_filter($dirty); // exclude null values
 
         return array_keys($dirtyNoNull);
+    }
+
+    /**
+     * Get a model for passive metadata inspection without starting its boot cycle.
+     *
+     * @return object
+     * @throws ReflectionException
+     */
+    protected static function getModelWithoutBooting($modelOrClass)
+    {
+        if ($modelOrClass instanceof Model) {
+            return $modelOrClass;
+        }
+
+        $reflection = new ReflectionClass($modelOrClass);
+
+        return $reflection->newInstanceWithoutConstructor();
     }
 }

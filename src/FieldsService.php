@@ -86,9 +86,7 @@ class FieldsService
         $observerDefaultAttributes = Helpers::getObserverFilledFields($this->modelClass);
 
         $primaryIndex = $this->primaryField();
-
         $table = Helpers::getTableFromThisModel($this->modelClass);
-
         return collect(Schema::getColumns($table))
             ->map(function ($column) { // specific to mariadb
                 if ($column['default'] == 'NULL') {
@@ -259,8 +257,7 @@ class FieldsService
     {
         $this->throwIfNotUsingModelMethodFirst();
 
-        $modelInstance = new $this->modelClass;
-        $attributes = collect($modelInstance->getAttributes())->filter()->keys()->toArray(); // ignore null values
+        $attributes = collect(Helpers::getModelAttributes($this->modelClass))->filter()->keys()->toArray(); // ignore null values
         $observerDefaultAttributes = Helpers::getObserverFilledFields($this->modelClass);
 
         $allFields = $this->allFields();
