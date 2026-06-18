@@ -87,6 +87,7 @@ class FieldsService
 
         $primaryIndex = $this->primaryField();
         $table = Helpers::getTableFromThisModel($this->modelClass);
+
         return collect(Schema::getColumns($table))
             ->map(function ($column) { // specific to mariadb
                 if ($column['default'] == 'NULL') {

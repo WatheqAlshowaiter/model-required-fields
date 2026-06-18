@@ -38,6 +38,7 @@ class Helpers
 
     /**
      * @return array
+     *
      * @throws ReflectionException
      */
     public static function getModelAttributes($model)
@@ -79,6 +80,7 @@ class Helpers
      * Get a model for passive metadata inspection without starting its boot cycle.
      *
      * @return object
+     *
      * @throws ReflectionException
      */
     protected static function getModelWithoutBooting($modelOrClass)
