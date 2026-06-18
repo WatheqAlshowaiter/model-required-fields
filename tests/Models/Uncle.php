@@ -19,13 +19,26 @@ class Uncle extends Model
     {
         parent::boot();
 
-        self::observe(UncleObserver::class);
+        if (method_exists(static::class, 'whenBooted')) {
+            static::whenBooted(function () {
+                static::registerDefaultFieldEvents();
+            });
 
-        self::creating(function ($model) {
+            return;
+        }
+
+        static::registerDefaultFieldEvents();
+    }
+
+    protected static function registerDefaultFieldEvents(): void
+    {
+        static::observe(UncleObserver::class);
+
+        static::creating(function ($model) {
             $model->boot_creating = 'creating';
         });
 
-        self::saving(function ($model) {
+        static::saving(function ($model) {
             $model->boot_saving = 'saving';
         });
     }

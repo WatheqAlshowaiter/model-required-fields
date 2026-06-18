@@ -13,7 +13,7 @@
 [![StandWithPalestine][ico-palestine]][link-palestine]
 [![ko-fi][ico-ko-fi]][link-ko-fi]
 
-[ico-laravel]: https://img.shields.io/badge/Laravel-%E2%89%A56.0-ff2d20?style=flat-square&logo=laravel
+[ico-laravel]: https://img.shields.io/badge/Laravel-6.0%20--%2013.0-ff2d20?style=flat-square&logo=laravel
 [ico-php]: https://img.shields.io/packagist/php-v/watheqalshowaiter/model-fields?color=%238892BF&style=flat-square&logo=php
 [ico-version]: https://img.shields.io/packagist/v/watheqalshowaiter/model-fields.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/watheqalshowaiter/model-fields.svg?style=flat-square&color=%23007ec6
@@ -430,7 +430,7 @@ So Briefly, This package is useful if:
 
 ## Features
 
-✅ Supports Laravel versions: 12, 11, 10, 9, 8, 7, and 6.
+✅ Supports Laravel versions: 13, 12, 11, 10, 9, 8, 7, and 6.
 
 ✅ Supports PHP versions: 8.4, 8.3, 8.2, 8.1, 8.0, and 7.4.
 
