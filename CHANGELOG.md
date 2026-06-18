@@ -2,6 +2,14 @@
 
 All notable changes to `model-required-fields` will be documented in this file.
 
+## 3.2.2 - 2026-06-18
+
+### What's Changed
+
+* Support laravel 13
+
+**Full Changelog**: https://github.com/WatheqAlshowaiter/model-fields/compare/3.2.1...3.2.2
+
 ## 3.2.1 - 2025-11-08
 
 ### What's Changed
