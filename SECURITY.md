@@ -10,6 +10,6 @@ These package versions are security-supported.
 
 ## Reporting a Vulnerability
 
-You can report a vulnerability by sending an email to [watheq[dot]alshowaiter[at]gmail[dot]com](mailto:watheq[dot]alshowaiter[at]gmail[dot]com).
+You can report a vulnerability by sending an email to [watheq[dot]alshowaiter[at]gmail[dot]com](mailto:watheq.alshowaiter@gmail.com).
 
 Thank you for helping to keep this package secure.
